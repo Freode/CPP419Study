@@ -1,4 +1,4 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ð¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œìž„ê°œë°œì˜ ì •ì„'
 
 #pragma once
 
@@ -6,8 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "ABAnimInstance.generated.h"
 
-// ¿©·¯ °³ÀÇ ÇÔ¼ö°¡ µî·ÏµÇµµ·Ï ÇÏ´Â °ÍÀº ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®
-// ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®¿¡ µî·ÏµÈ ¸ðµç ÇÔ¼ö¸¦ È£ÃâÇÏ´Â ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ® ¸í·ÉÀº Broadcast´Ù.
+// ì—¬ëŸ¬ ê°œì˜ í•¨ìˆ˜ê°€ ë“±ë¡ë˜ë„ë¡ í•˜ëŠ” ê²ƒì€ ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸
+// ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ì— ë“±ë¡ëœ ëª¨ë“  í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ëŠ” ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ ëª…ë ¹ì€ Broadcastë‹¤.
 
 DECLARE_MULTICAST_DELEGATE(FOnNextAttackCheckDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate);
@@ -21,60 +21,60 @@ class CPP419_API UABAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
-	// »ý¼ºÀÚ
+	// ìƒì„±ìž
 	UABAnimInstance();
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç ÀÎ½ºÅÏ½º¿¡¼­ÀÇ Tick ÀÌº¥Æ® ¿ªÇÒ
+	// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤ì—ì„œì˜ Tick ì´ë²¤íŠ¸ ì—­í• 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç ¸ùÅ¸ÁÖ Àç»ý ÇÔ¼ö
+	// ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ìž¬ìƒ í•¨ìˆ˜
 	void PlayAttackMontage();
 
-	// Á¡ÇÁ °ø°Ý ¸ùÅ¸ÁÖ ¼½¼Ç
+	// ì í”„ ê³µê²© ëª½íƒ€ì£¼ ì„¹ì…˜
 	void JumpToAttackMontageSection(int32 NewSection);
 
 public:
-	// µ¨¸®°ÔÀÌÆ® °´Ã¼
+	// ë¸ë¦¬ê²Œì´íŠ¸ ê°ì²´
 	FOnNextAttackCheckDelegate OnNextAttackCheck;
 	FOnAttackHitCheckDelegate OnAttackHitCheck;
 
-	// Ä³¸¯ÅÍ¸¦ Á×À½ »óÅÂ·Î ¼³Á¤
+	// ìºë¦­í„°ë¥¼ ì£½ìŒ ìƒíƒœë¡œ ì„¤ì •
 	void SetDeadAnim() { IsDead = true; }
 
 
 private:
 
-	// ¾Æ·¡ÀÇ ¸â¹ö ÇÔ¼ö¸¦ ¾ð¸®¾ó ·±Å¸ÀÓÀÌ Ã£À» ¼ö ÀÖµµ·Ï UFUNCTION ¸ÅÅ©·Î°¡ ÁöÁ¤µÇ¾î¾ß ÇÔ.
-	// AnimMontage³ª AnimSequence¿¡¼­ Notify°¡ È£ÃâµÇ¸é, ¾ð¸®¾ó ¿£ÁøÀº ÀÌ¸¦ º¸°í ÀÚµ¿À¸·Î AnimInstance ClassÀÇ 'AnimNotify_³ëÆ¼ÆÄÀÌ¸í'ÀÌ¶ó´Â ÀÌ¸§ÀÇ ¸â¹ö ÇÔ¼ö¸¦ Ã£¾Æ¼­ È£Ãâ.
+	// ì•„ëž˜ì˜ ë©¤ë²„ í•¨ìˆ˜ë¥¼ ì–¸ë¦¬ì–¼ ëŸ°íƒ€ìž„ì´ ì°¾ì„ ìˆ˜ ìžˆë„ë¡ UFUNCTION ë§¤í¬ë¡œê°€ ì§€ì •ë˜ì–´ì•¼ í•¨.
+	// AnimMontageë‚˜ AnimSequenceì—ì„œ Notifyê°€ í˜¸ì¶œë˜ë©´, ì–¸ë¦¬ì–¼ ì—”ì§„ì€ ì´ë¥¼ ë³´ê³  ìžë™ìœ¼ë¡œ AnimInstance Classì˜ 'AnimNotify_ë…¸í‹°íŒŒì´ëª…'ì´ë¼ëŠ” ì´ë¦„ì˜ ë©¤ë²„ í•¨ìˆ˜ë¥¼ ì°¾ì•„ì„œ í˜¸ì¶œ.
 	UFUNCTION()
 		void AnimNotify_AttackHitCheck();
 
-	// À§¿Í µ¿ÀÏ
+	// ìœ„ì™€ ë™ì¼
 	UFUNCTION()
 		void AnimNotify_NextAttackCheck();
 
 private:
-	// EditAnywehre : ¾Ö´Ï¸ÞÀÌ¼Ç ºí·çÇÁ¸°Æ®ÀÇ ¾Ö´Ô ±×·¡ÇÁ¸¦ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï
-	// BlueprintReadOnly : ºí·çÇÁ¸°Æ®¿¡¼­ Á¢±Ù °¡´ÉÇÏÁö¸¸, ¿ÀÁ÷ ÀÐ±â¸¸ °¡´É
-	// BlueprintReadWrite : ºí·çÇÁ¸°Æ®¿¡¼­ Á¢±Ù °¡´ÉÇÏ°í ÀÐ±â¿Í ¾²±â ¸ðµÎ °¡´É
-	// Meta = (AllowPrivateAccess = true) :  Á¢±Ù ÁöÁ¤ÀÚ°¡ privateÁö¸¸, ¿ÜºÎ¿¡¼­ Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï ÇÔ. ÇÏÁö¸¸, Àº´ÐÈ­´Â ¶Ç µÊ.
-	// DefaultsOnly : Å¬·¡½ºÀÇ ±âº»°ªÀ» ´ã´çÇÏ´Â ºí·çÇÁ¸°Æ® ÆíÁý È­¸é¿¡¼­¸¸ º¸¿©Áü. <- VisibleDefaultsOnly
-	// InstanceOnly : ÀÎ½ºÅÏ½ºÀÇ ¼Ó¼ºÀ» º¸¿©ÁÖ´Â ¿¡µðÅÍ ºäÆ÷Æ®¿¡¼­¸¸ º¸¿©Áü.
+	// EditAnywehre : ì• ë‹ˆë©”ì´ì…˜ ë¸”ë£¨í”„ë¦°íŠ¸ì˜ ì• ë‹˜ ê·¸ëž˜í”„ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìžˆë„ë¡
+	// BlueprintReadOnly : ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•˜ì§€ë§Œ, ì˜¤ì§ ì½ê¸°ë§Œ ê°€ëŠ¥
+	// BlueprintReadWrite : ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•˜ê³  ì½ê¸°ì™€ ì“°ê¸° ëª¨ë‘ ê°€ëŠ¥
+	// Meta = (AllowPrivateAccess = true) :  ì ‘ê·¼ ì§€ì •ìžê°€ privateì§€ë§Œ, ì™¸ë¶€ì—ì„œ ì ‘ê·¼í•  ìˆ˜ ìžˆë„ë¡ í•¨. í•˜ì§€ë§Œ, ì€ë‹‰í™”ëŠ” ë˜ ë¨.
+	// DefaultsOnly : í´ëž˜ìŠ¤ì˜ ê¸°ë³¸ê°’ì„ ë‹´ë‹¹í•˜ëŠ” ë¸”ë£¨í”„ë¦°íŠ¸ íŽ¸ì§‘ í™”ë©´ì—ì„œë§Œ ë³´ì—¬ì§. <- VisibleDefaultsOnly
+	// InstanceOnly : ì¸ìŠ¤í„´ìŠ¤ì˜ ì†ì„±ì„ ë³´ì—¬ì£¼ëŠ” ì—ë””í„° ë·°í¬íŠ¸ì—ì„œë§Œ ë³´ì—¬ì§.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float CurrentPawnSpeed;
 	
-	// °øÁß¿¡ ÀÖ´ÂÁö ÆÇ´Ü
+	// ê³µì¤‘ì— ìžˆëŠ”ì§€ íŒë‹¨
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool IsInAir;
 
-	// ¿¬¼Ó °ø°Ý ¸ùÅ¸ÁÖ ¾Ö¼Â
+	// ì—°ì† ê³µê²© ëª½íƒ€ì£¼ ì• ì…‹
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* AttackMontage;
 	
-	// ÇöÀç °ø°Ý ¸ùÅ¸ÁÖ ¼½¼Ç ÀÌ¸§ °¡Á®¿À±â
+	// í˜„ìž¬ ê³µê²© ëª½íƒ€ì£¼ ì„¹ì…˜ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 	FName GetAttackMontageSectionName(int32 Section);
 
-	// ÇöÀç Ä³¸¯ÅÍ°¡ Á×¾ú´ÂÁö ÆÇ´Ü
+	// í˜„ìž¬ ìºë¦­í„°ê°€ ì£½ì—ˆëŠ”ì§€ íŒë‹¨
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool IsDead;
 };

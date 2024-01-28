@@ -1,9 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CPP419.h"
 #include "Modules/ModuleManager.h"
 
-// ·Î±× Ä«Å×°í¸® Á¤ÀÇ
+// ë¡œê·¸ ì¹´í…Œê³ ë¦¬ ì •ì˜
 DEFINE_LOG_CATEGORY(CPP419);
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, CPP419, "CPP419" );

@@ -1,4 +1,4 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ğ¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œì„ê°œë°œì˜ ì •ì„'
 #pragma once
 
 #include "CPP419.h"
@@ -13,21 +13,21 @@ class CPP419_API AABGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
-// »ı¼ºÀÚ ÄÚµå ½ÇÇà
+// ìƒì„±ì ì½”ë“œ ì‹¤í–‰
 public:
-	// »ı¼ºÀÚ
+	// ìƒì„±ì
 	AABGameMode();
 	
-	// ·Î±×ÀÎÇÑ Á÷ÈÄ
+	// ë¡œê·¸ì¸í•œ ì§í›„
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 
-	// ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­ÇÑ ÈÄ
+	// ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”í•œ í›„
 	virtual void PostInitializeComponents() override;
 
-	// °ÔÀÓ Á¡¼ö Áõ°¡
+	// ê²Œì„ ì ìˆ˜ ì¦ê°€
 	void AddScore(class AABPlayerController *ScoredPlayer);
 
-	// °ÔÀÓ Á¡¼ö °¡Á®¿À±â
+	// ê²Œì„ ì ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	int32 GetScore() const;
 
 private:
@@ -35,7 +35,7 @@ private:
 	UPROPERTY()
 		class AABGameStateBase* ABGameState;
 
-	// ¸ñÇ¥ Á¡¼ö
+	// ëª©í‘œ ì ìˆ˜
 	UPROPERTY()
 		int32 ScoreToClear;
 };
