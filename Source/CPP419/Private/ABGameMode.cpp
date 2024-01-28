@@ -1,4 +1,4 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ğ¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œì„ê°œë°œì˜ ì •ì„'
 
 #include "ABGameMode.h"
 #include "ABCharacter.h"
@@ -8,53 +8,53 @@
 
 AABGameMode::AABGameMode()
 {
-	// Default Pawn Class¸¦ ABPawn Å¬·¡½º·Î ÁöÁ¤ÇÏ±â
-	// ¾ğ¸®¾ó ¿ÀºêÁ§Æ® Å¬·¡½º Á¤º¸´Â Unreal Header Tool¿¡ ÀÇÇØ ÀÚµ¿À¸·Î »ı¼ºµÇ¸ç, ¾ğ¸®¾ó ¿ÀºêÁ§Æ®¸¶´Ù ÀÚµ¿À¸·Î »ı¼ºµÈ
-	// StaticClass¶ó´Â ½ºÅÂÆ½ ÇÔ¼ö¸¦ È£ÃâÇØ °¡Á®¿Ã ¼ö ÀÖ´Ù.
+	// Default Pawn Classë¥¼ ABPawn í´ë˜ìŠ¤ë¡œ ì§€ì •í•˜ê¸°
+	// ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ í´ë˜ìŠ¤ ì •ë³´ëŠ” Unreal Header Toolì— ì˜í•´ ìë™ìœ¼ë¡œ ìƒì„±ë˜ë©°, ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ë§ˆë‹¤ ìë™ìœ¼ë¡œ ìƒì„±ëœ
+	// StaticClassë¼ëŠ” ìŠ¤íƒœí‹± í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ ê°€ì ¸ì˜¬ ìˆ˜ ìˆë‹¤.
 	DefaultPawnClass = AABCharacter::StaticClass();
 
-	// Player Controller ClassÀÇ Å¬·¡½º¸¦ º¯°æ
+	// Player Controller Classì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½
 	PlayerControllerClass = AABPlayerController::StaticClass();
 
-	// Player State Class¸¦ º¯°æ
+	// Player State Classë¥¼ ë³€ê²½
 	PlayerStateClass = AABPlayerState::StaticClass();
 
-	// Game State Class¸¦ º¯°æ
+	// Game State Classë¥¼ ë³€ê²½
 	GameStateClass = AABGameStateBase::StaticClass();
 
-	// ¸ñÇ¥ Á¡¼ö ¼³Á¤
+	// ëª©í‘œ ì ìˆ˜ ì„¤ì •
 	ScoreToClear = 2;
 }
 
-// ·Î±×ÀÎÇÑ Á÷ÈÄ
+// ë¡œê·¸ì¸í•œ ì§í›„
 void AABGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	ABLOG(Warning, TEXT("PostLogin Begin"));
 	Super::PostLogin(NewPlayer);
 	ABLOG(Warning, TEXT("PostLogin End"));
 
-	// PlayerState µ¥ÀÌÅÍ ÃÊ±âÈ­
+	// PlayerState ë°ì´í„° ì´ˆê¸°í™”
 	auto ABPlayerState = Cast<AABPlayerState>(NewPlayer->PlayerState);
 	ABCHECK(nullptr != ABPlayerState);
 	ABPlayerState->InitPlayerData();
 }
 
-// ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­ Á÷ÈÄ
+// ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™” ì§í›„
 void AABGameMode::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	ABGameState = Cast<AABGameStateBase>(GameState);
 }
 
-// °ÔÀÓ Á¡¼ö Áõ°¡
+// ê²Œì„ ì ìˆ˜ ì¦ê°€
 void AABGameMode::AddScore(AABPlayerController* ScoredPlayer)
 {
-	// ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¸¸Å­ ¸ğµÎ ¹İº¹
+	// í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ë§Œí¼ ëª¨ë‘ ë°˜ë³µ
 	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
 	{
 		const auto ABPlayerController = Cast<AABPlayerController>(It->Get());
 
-		// Áõ°¡ÇÒ ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¿Í ÀÏÄ¡ÇÒ ¶§
+		// ì¦ê°€í•  í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ì™€ ì¼ì¹˜í•  ë•Œ
 		if ((nullptr != ABPlayerController) && (ScoredPlayer == ABPlayerController))
 		{
 			ABPlayerController->AddGameScore();
@@ -62,24 +62,24 @@ void AABGameMode::AddScore(AABPlayerController* ScoredPlayer)
 		}
 	}
 
-	// °ÔÀÓ ½ºÅ×ÀÌÆ®¿¡¼­ Á¡¼ö Áõ°¡
+	// ê²Œì„ ìŠ¤í…Œì´íŠ¸ì—ì„œ ì ìˆ˜ ì¦ê°€
 	ABGameState->AddGameScore();
 
-	// ¸ñÇ¥ Á¡¼ö ´Ş¼º ¿©ºÎ È®ÀÎ
+	// ëª©í‘œ ì ìˆ˜ ë‹¬ì„± ì—¬ë¶€ í™•ì¸
 	if (GetScore() >= ScoreToClear)
 	{
 		ABGameState->SetGameCleared();
 
-		// Pawn Iterator·Î µ¹±â : ¸ğµç Æù ¸ØÃß±â
+		// Pawn Iteratorë¡œ ëŒê¸° : ëª¨ë“  í° ë©ˆì¶”ê¸°
 		for (FConstPawnIterator It = GetWorld()->GetPawnIterator(); It; ++It)
 		{
 			(*It)->TurnOff();
 		}
 
-		// ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ Ã£±â
+		// í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¾ê¸°
 		for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
 		{
-			// °á°ú UI Ãâ·Â
+			// ê²°ê³¼ UI ì¶œë ¥
 			const auto ABPlayerController = Cast<AABPlayerController>(It->Get());
 			if (nullptr != ABPlayerController)
 			{
@@ -90,7 +90,7 @@ void AABGameMode::AddScore(AABPlayerController* ScoredPlayer)
 	}
 }
 
-// °ÔÀÓ Á¡¼ö °¡Á®¿À±â
+// ê²Œì„ ì ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 int32 AABGameMode::GetScore() const
 {
 	return ABGameState->GetTotalGameScore();

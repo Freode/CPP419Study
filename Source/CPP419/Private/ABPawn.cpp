@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ABPawn.h"
 
@@ -9,37 +9,37 @@ AABPawn::AABPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// ÄÄÆ÷³ÍÆ® »ı¼º
+	// ì»´í¬ë„ŒíŠ¸ ìƒì„±
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CAPSULE"));
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESH"));
 	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MOVEMENT"));
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
-	// °èÃş ±¸Á¶ ¼³Á¤
+	// ê³„ì¸µ êµ¬ì¡° ì„¤ì •
 	RootComponent = Capsule;
 	Mesh->SetupAttachment(Capsule);
 	SpringArm->SetupAttachment(Capsule);
 	Camera->SetupAttachment(SpringArm);
 
-	// ±âº»°ª ¼³Á¤
+	// ê¸°ë³¸ê°’ ì„¤ì •
 	Capsule->SetCapsuleHalfHeight(88.0f);
 	Capsule->SetCapsuleRadius(34.0f);
 	Mesh->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -88.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
-	// ½ºÄÌ·¹Å» ¸Ş½Ã ¼³Á¤
+	// ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ì„¤ì •
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Cardboard.SK_CharM_Cardboard"));
 	if (SK_CARDBOARD.Succeeded())
 	{
 		Mesh->SetSkeletalMesh(SK_CARDBOARD.Object);
 	}
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ºí·çÇÁ¸°Æ® ÀÎ½ºÅÏ½º ¼³Á¤
+	// ì• ë‹ˆë©”ì´ì…˜ ë¸”ë£¨í”„ë¦°íŠ¸ ì¸ìŠ¤í„´ìŠ¤ ì„¤ì •
 	Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
-	// ClassFinder¸¦ ÅëÇØ¼­ Å¬·¡½º Á¤º¸¸¦ °¡Á®¿È
+	// ClassFinderë¥¼ í†µí•´ì„œ í´ë˜ìŠ¤ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
 	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM(TEXT("/Game/Book/Animations/WarriorAnimationBlueprint.WarriorAnimationBlueprint_C"));
 	
 	if (WARRIOR_ANIM.Succeeded())
@@ -54,11 +54,11 @@ void AABPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//// °ÔÀÓ ½ÇÇà Áß¿¡ ¾Ö¼ÂÀ» ·ÎµåÇÏ´Â ¸í·É¾î : LoadObject<Type>
+	//// ê²Œì„ ì‹¤í–‰ ì¤‘ì— ì• ì…‹ì„ ë¡œë“œí•˜ëŠ” ëª…ë ¹ì–´ : LoadObject<Type>
 	//Mesh->SetAnimationMode(EAnimationMode::AnimationSingleNode);
 	//UAnimationAsset* AnimAsset = LoadObject<UAnimationAsset>(nullptr, TEXT("/Game/InfinityBladeWarriors/Animations/WarriorRun.WarriorRun"));
 
-	//// ¾Ö¼Â ·ÎµùÀÌ ¿Ï·áµÇ¸é Ãß°¡
+	//// ì• ì…‹ ë¡œë”©ì´ ì™„ë£Œë˜ë©´ ì¶”ê°€
 	//if (AnimAsset != nullptr)
 	//{
 	//	Mesh->PlayAnimation(AnimAsset, true);
@@ -77,7 +77,7 @@ void AABPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	// Å°º¸µå ÀÌº¥Æ®¿¡ ¿¬°áÇÒ ÇÔ¼ö¸¦ ¿©±â¼­ Á¤ÀÇ
+	// í‚¤ë³´ë“œ ì´ë²¤íŠ¸ì— ì—°ê²°í•  í•¨ìˆ˜ë¥¼ ì—¬ê¸°ì„œ ì •ì˜
 	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AABPawn::UpDown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABPawn::LeftRight);
 }
@@ -94,19 +94,19 @@ void AABPawn::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 }
 
-// À§¾Æ·¡ ¿òÁ÷ÀÏ ¶§, ¿¬°áÇÒ ÇÔ¼ö
+// ìœ„ì•„ë˜ ì›€ì§ì¼ ë•Œ, ì—°ê²°í•  í•¨ìˆ˜
 void AABPawn::UpDown(float NewAxisValue)
 {
-	// ÆùÀÇ ¿òÁ÷ÀÓÀ» ÁÖ´Â ÇÔ¼ö
+	// í°ì˜ ì›€ì§ì„ì„ ì£¼ëŠ” í•¨ìˆ˜
 	AddMovementInput(GetActorForwardVector(), NewAxisValue);
 
 	// ABLOG(Warning, TEXT("%f"), NewAxisValue);
 }
 
-// ¿ŞÂÊ¿À¸¥ÂÊÀ¸·Î ¿òÁ÷ÀÏ ¶§, ¿¬°áÇÒ ÇÔ¼ö
+// ì™¼ìª½ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì›€ì§ì¼ ë•Œ, ì—°ê²°í•  í•¨ìˆ˜
 void AABPawn::LeftRight(float NewAxisValue)
 {
-	// ÆùÀÇ ¿òÁ÷ÀÓÀ» ÁÖ´Â ÇÔ¼ö
+	// í°ì˜ ì›€ì§ì„ì„ ì£¼ëŠ” í•¨ìˆ˜
 	AddMovementInput(GetActorRightVector(), NewAxisValue);
 
 	// ABLOG(Warning, TEXT("%f"), NewAxisValue);

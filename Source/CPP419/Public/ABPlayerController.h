@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,25 +15,25 @@ class CPP419_API AABPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	// »ı¼ºÀÚ
+	// ìƒì„±ì
 	AABPlayerController();
 
 	virtual void PostInitializeComponents() override;
 	virtual void Possess(APawn* aPawn) override;
 
-	// HUD °¡Á®¿À±â
+	// HUD ê°€ì ¸ì˜¤ê¸°
 	class UABHUDWidget* GetHUDWidget() const;
 
-	// NPC°¡ Á×¾úÀ» ¶§
+	// NPCê°€ ì£½ì—ˆì„ ë•Œ
 	void NPCKill(class AABCharacter* KilledNPC) const;
 
-	// °ÔÀÓ Á¡¼ö Áõ°¡
+	// ê²Œì„ ì ìˆ˜ ì¦ê°€
 	void AddGameScore() const;
 
-	// ÀÔ·Â ¸ğµå º¯°æ
+	// ì…ë ¥ ëª¨ë“œ ë³€ê²½
 	void ChangeInputMode(bool bGameMode = true);
 
-	// °á°úÃ¢ UI º¸¿©ÁÖ±â
+	// ê²°ê³¼ì°½ UI ë³´ì—¬ì£¼ê¸°
 	void ShowResultUI();
 
 protected:
@@ -42,15 +42,15 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-	// À§Á¬ Å¬·¡½º ¼³Á¤
+	// ìœ„ì ¯ í´ë˜ìŠ¤ ì„¤ì •
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UABHUDWidget> HUDWidgetClass;
 
-	// ¸Ş´º À§Á¬ Å¬·¡½º ¼³Á¤
+	// ë©”ë‰´ ìœ„ì ¯ í´ë˜ìŠ¤ ì„¤ì •
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UABGameplayWidget> MenuWidgetClass;
 
-	// °á°ú À§Á¬ Å¬·¡½º ¼³Á¤
+	// ê²°ê³¼ ìœ„ì ¯ í´ë˜ìŠ¤ ì„¤ì •
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UABGameplayWidget> ResultWidgetClass;
 
@@ -59,24 +59,24 @@ private:
 	UPROPERTY()
 		class UABHUDWidget* HUDWidget;
 
-	// ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ® ¿¬°áÇÒ Å¬·¡½º
+	// í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸ ì—°ê²°í•  í´ë˜ìŠ¤
 	UPROPERTY()
 		class AABPlayerState* ABPlayerState;
 
-	// ¸Ş´º À§Á¬
+	// ë©”ë‰´ ìœ„ì ¯
 	UPROPERTY()
 		class UABGameplayWidget* MenuWidget;
 
-	// °á°ú À§Á¬
+	// ê²°ê³¼ ìœ„ì ¯
 	UPROPERTY()
 		class UABGameplayResultWidget* ResultWidget;
 
-	// °ÔÀÓ ÀÔ·Â ¸ğµå
+	// ê²Œì„ ì…ë ¥ ëª¨ë“œ
 	FInputModeGameOnly GameInputMode;
 
-	// UI ÀÔ·Â ¸ğµå
+	// UI ì…ë ¥ ëª¨ë“œ
 	FInputModeUIOnly UIInputMode;
 
-	// °ÔÀÓ ÁßÁö
+	// ê²Œì„ ì¤‘ì§€
 	void OnGamePuase();
 };

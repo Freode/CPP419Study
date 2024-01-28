@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ABPlayerController.h"
 #include "ABHUDWidget.h"
@@ -8,24 +8,24 @@
 #include "ABGameplayResultWidget.h"
 #include "ABGameStateBase.h"
 
-// »ı¼ºÀÚ
+// ìƒì„±ì
 AABPlayerController::AABPlayerController()
 {
-	// HUD UI Å¬·¡½º ¼³Á¤
+	// HUD UI í´ë˜ìŠ¤ ì„¤ì •
 	static ConstructorHelpers::FClassFinder<UABHUDWidget> UI_HUD_C(TEXT("/Game/Book/UI/UI_HUD.UI_HUD_C"));
 	if (UI_HUD_C.Succeeded())
 	{
 		HUDWidgetClass = UI_HUD_C.Class;
 	}
 
-	// ¸Ş´º UI Å¬·¡½º ¼³Á¤
+	// ë©”ë‰´ UI í´ë˜ìŠ¤ ì„¤ì •
 	static ConstructorHelpers::FClassFinder<UABGameplayWidget> UI_MENU_C(TEXT("/Game/Book/UI/UI_Menu.UI_Menu_C"));
 	if (UI_MENU_C.Succeeded())
 	{
 		MenuWidgetClass = UI_MENU_C.Class;
 	}
 
-	// °á°ú UI Å¬·¡½º ¼³Á¤
+	// ê²°ê³¼ UI í´ë˜ìŠ¤ ì„¤ì •
 	static ConstructorHelpers::FClassFinder<UABGameplayResultWidget> UI_RESULT_C(TEXT("/Game/Book/UI/UI_Result.UI_Result_C"));
 	if (UI_RESULT_C.Succeeded())
 	{
@@ -49,33 +49,33 @@ void AABPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// °ÔÀÓ¿¡°Ô¸¸ ÀÔ·ÂÀÌ µÇµµ·Ï ¼³Á¤
+	// ê²Œì„ì—ê²Œë§Œ ì…ë ¥ì´ ë˜ë„ë¡ ì„¤ì •
 	FInputModeGameOnly InputMode;
 	SetInputMode(InputMode);
 
-	// HUD ¼³Á¤
+	// HUD ì„¤ì •
 	ABLOG(Warning, TEXT("Player Controller Beginplay"));
 	
-	// ÀÔ·Â ¸ğµå º¯°æ
+	// ì…ë ¥ ëª¨ë“œ ë³€ê²½
 	ChangeInputMode(true);
 
 	HUDWidget = CreateWidget<UABHUDWidget>(this, HUDWidgetClass);
 	ABCHECK(nullptr != HUDWidget);
 	HUDWidget->AddToViewport(1);
 
-	// °á°ú À§Á¬ ¼³Á¤
+	// ê²°ê³¼ ìœ„ì ¯ ì„¤ì •
 	ResultWidget = CreateWidget<UABGameplayResultWidget>(this, ResultWidgetClass);
 	ABCHECK(nullptr != ResultWidget);
 
-	// HUD À§Á¬°ú ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ® ¿¬°á
+	// HUD ìœ„ì ¯ê³¼ í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸ ì—°ê²°
 	ABPlayerState = Cast<AABPlayerState>(PlayerState);
 	ABCHECK(nullptr != ABPlayerState);
 	HUDWidget->BindPlayerState(ABPlayerState);
-	// ¿¬°áÇßÀ¸¹Ç·Î Á¤º¸ ¾÷µ¥ÀÌÆ®
+	// ì—°ê²°í–ˆìœ¼ë¯€ë¡œ ì •ë³´ ì—…ë°ì´íŠ¸
 	ABPlayerState->OnPlayerStateChanged.Broadcast();
 }
 
-// HUD À§Á¬ °¡Á®¿À±â
+// HUD ìœ„ì ¯ ê°€ì ¸ì˜¤ê¸°
 UABHUDWidget* AABPlayerController::GetHUDWidget() const
 {
 	return HUDWidget;
@@ -88,42 +88,42 @@ void AABPlayerController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("GamePause"), EInputEvent::IE_Pressed, this, &AABPlayerController::OnGamePuase);
 }
 
-// NPC°¡ Á×¾úÀ» ¶§
+// NPCê°€ ì£½ì—ˆì„ ë•Œ
 void AABPlayerController::NPCKill(AABCharacter* KilledNPC) const
 {
-	// ÇöÀç ÇÃ·¹ÀÌ¾î¿¡°Ô ÇØ´ç NPC°¡ Á¦°øÇÏ´Â °æÇèÄ¡·®À» Ãß°¡
+	// í˜„ì¬ í”Œë ˆì´ì–´ì—ê²Œ í•´ë‹¹ NPCê°€ ì œê³µí•˜ëŠ” ê²½í—˜ì¹˜ëŸ‰ì„ ì¶”ê°€
 	ABPlayerState->AddExp(KilledNPC->GetExp());
 }
 
-// °ÔÀÓ Á¡¼ö Áõ°¡
+// ê²Œì„ ì ìˆ˜ ì¦ê°€
 void AABPlayerController::AddGameScore() const
 {
 	ABPlayerState->AddGameScore();
 }
 
-// °ÔÀÓ ÁßÁö
+// ê²Œì„ ì¤‘ì§€
 void AABPlayerController::OnGamePuase()
 {
-	// ¸Ş´º À§Á¬ »ı¼º
+	// ë©”ë‰´ ìœ„ì ¯ ìƒì„±
 	MenuWidget = CreateWidget<UABGameplayWidget>(this, MenuWidgetClass);
 	ABCHECK(nullptr != MenuWidget);
 	MenuWidget->AddToViewport(3);
 
-	// °ÔÀÓ ÁßÁö ¹× UI ÀÔ·Â ¸ğµå·Î º¯°æ
+	// ê²Œì„ ì¤‘ì§€ ë° UI ì…ë ¥ ëª¨ë“œë¡œ ë³€ê²½
 	SetPause(true);
 	ChangeInputMode(false);
 }
 
-// ÀÔ·Â ¸ğµå º¯°æ
+// ì…ë ¥ ëª¨ë“œ ë³€ê²½
 void AABPlayerController::ChangeInputMode(bool bGameMode)
 {
-	// °ÔÀÓ ÀÔ·Â ¸ğµå
+	// ê²Œì„ ì…ë ¥ ëª¨ë“œ
 	if (bGameMode)
 	{
 		SetInputMode(GameInputMode);
 		bShowMouseCursor = false;
 	}
-	// UI ÀÔ·Â ¸ğµå
+	// UI ì…ë ¥ ëª¨ë“œ
 	else
 	{
 		SetInputMode(UIInputMode);
@@ -131,10 +131,10 @@ void AABPlayerController::ChangeInputMode(bool bGameMode)
 	}
 }
 
-// °á°ú UI Ãâ·Â
+// ê²°ê³¼ UI ì¶œë ¥
 void AABPlayerController::ShowResultUI()
 {
-	// Game State¸¦ °¡Á®¿Í¼­ °á°úÃ¢¿¡ ¹ÙÀÎµù
+	// Game Stateë¥¼ ê°€ì ¸ì™€ì„œ ê²°ê³¼ì°½ì— ë°”ì¸ë”©
 	auto ABGameState = Cast<AABGameStateBase>(UGameplayStatics::GetGameState(this));
 	ABCHECK(nullptr != ABGameState);
 	ResultWidget->BindGameState(ABGameState);

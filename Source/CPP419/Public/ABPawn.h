@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -38,7 +38,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Visual)
 		USkeletalMeshComponent* Mesh;
 
-	// Floating Pawn Movement : Áß·Â¿¡ ¿µÇâÀ» ¹ŞÁö ¾Ê°í °´Ã¼¸¦ ¿òÁ÷ÀÓÀ» °ü¿©
+	// Floating Pawn Movement : ì¤‘ë ¥ì— ì˜í–¥ì„ ë°›ì§€ ì•Šê³  ê°ì²´ë¥¼ ì›€ì§ì„ì„ ê´€ì—¬
 	UPROPERTY(VisibleAnywhere, Category = Movement)
 		UFloatingPawnMovement* Movement;
 
@@ -49,10 +49,10 @@ public:
 		UCameraComponent* Camera;
 
 private:
-	// À§¾Æ·¡ ¿òÁ÷ÀÏ ¶§, ¿¬°áÇÒ ÇÔ¼ö
+	// ìœ„ì•„ë˜ ì›€ì§ì¼ ë•Œ, ì—°ê²°í•  í•¨ìˆ˜
 	void UpDown(float NewAxisValue);
 
-	// ¿ŞÂÊ ¿À¸¥ÂÊÀ¸·Î ¿òÁ÷ÀÏ ¶§, ¿¬°áÇÒ ÇÔ¼ö
+	// ì™¼ìª½ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì›€ì§ì¼ ë•Œ, ì—°ê²°í•  í•¨ìˆ˜
 	void LeftRight(float NewAxisValue);
 
 };

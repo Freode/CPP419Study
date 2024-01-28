@@ -1,4 +1,4 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ğ¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œì„ê°œë°œì˜ ì •ì„'
 
 #pragma once
 
@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ABCharacter.generated.h"
 
-// °ø°İ Á¾·áµÆÀ» ¶§, »ç¿ëÇÒ ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®
+// ê³µê²© ì¢…ë£Œëì„ ë•Œ, ì‚¬ìš©í•  ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
 
 UCLASS()
@@ -18,13 +18,13 @@ public:
 	// Sets default values for this character's properties
 	AABCharacter();
 
-	// Ä³¸¯ÅÍ »óÅÂ ¼³Á¤
+	// ìºë¦­í„° ìƒíƒœ ì„¤ì •
 	void SetCharacterState(ECharacterState NewState);
 
-	// Ä³¸¯ÅÍ »óÅÂ °¡Á®¿À±â
+	// ìºë¦­í„° ìƒíƒœ ê°€ì ¸ì˜¤ê¸°
 	ECharacterState GetCharacterState() const;
 
-	// ÇöÀç ÇÃ·¹ÀÌ¾î °æÇèÄ¡·® °¡Á®¿À±â
+	// í˜„ì¬ í”Œë ˆì´ì–´ ê²½í—˜ì¹˜ëŸ‰ ê°€ì ¸ì˜¤ê¸°
 	int32 GetExp() const;
 
 protected:
@@ -44,22 +44,22 @@ public:
 	// Called when object takes damamge by outer
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
-	// ¼ÒÀ¯µÇ¾úÀ» ¶§, È£ÃâÇÏ´Â ÇÔ¼ö
+	// ì†Œìœ ë˜ì—ˆì„ ë•Œ, í˜¸ì¶œí•˜ëŠ” í•¨ìˆ˜
 	virtual void PossessedBy(AController* NewController) override;
 
-	// ¹«±â ¼³Á¤ÇÒ ¼ö ÀÖ´ÂÁö ¿©ºÎ
+	// ë¬´ê¸° ì„¤ì •í•  ìˆ˜ ìˆëŠ”ì§€ ì—¬ë¶€
 	bool CanSetWeapon();
 
-	// ¹«±â ¼³Á¤
+	// ë¬´ê¸° ì„¤ì •
 	void SetWeapon(class AABWeapon* NewWeapon);
 
-	// ÃÖÁ¾ °ø°İ »ç°Å¸® °¡Á®¿À±â
+	// ìµœì¢… ê³µê²© ì‚¬ê±°ë¦¬ ê°€ì ¸ì˜¤ê¸°
 	float GetFinalAttackRange() const;
 
-	// ÃÖÁ¾ °ø°İ·Â °¡Á®¿À±â
+	// ìµœì¢… ê³µê²©ë ¥ ê°€ì ¸ì˜¤ê¸°
 	float GetFinalAttackDamage() const;
 
-	// ¹«±â Å¬·¡½º
+	// ë¬´ê¸° í´ë˜ìŠ¤
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
 		class AABWeapon* CurrentWeapon;
 
@@ -67,7 +67,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
 		USkeletalMeshComponent* Weapon;
 
-	// Ä³¸¯ÅÍ »óÅÂ Actor Component
+	// ìºë¦­í„° ìƒíƒœ Actor Component
 	UPROPERTY(VisibleAnywhere, Category = Stat)
 		class UABCharacterStatComponent* CharacterStat;
 
@@ -78,57 +78,57 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		UCameraComponent* Camera;
 
-	// Ã¼·Â UI Component
+	// ì²´ë ¥ UI Component
 	UPROPERTY(VisibleAnywhere, Category = UI)
 		class UWidgetComponent* HPBarWidget;
 
-	// ¸¶¿ì½º ¿ŞÂÊ Å¬¸¯ÇßÀ» ¶§, °ø°İÇÏ´Â ÇÔ¼ö ½ÇÇà
+	// ë§ˆìš°ìŠ¤ ì™¼ìª½ í´ë¦­í–ˆì„ ë•Œ, ê³µê²©í•˜ëŠ” í•¨ìˆ˜ ì‹¤í–‰
 	void Attack();
 	
-	// °ø°İÀÌ Á¾·áµÆÀ» ¶§, È£ÃâÇÒ ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ® °´Ã¼
+	// ê³µê²©ì´ ì¢…ë£Œëì„ ë•Œ, í˜¸ì¶œí•  ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ ê°ì²´
 	FOnAttackEndDelegate OnAttackEnd;
 	
 private:
 
-	// ¹æÇâ Å° ÀÌº¥Æ®¿¡ ´ëÇØ¼­ È£ÃâÇÒ ÇÔ¼ö
+	// ë°©í–¥ í‚¤ ì´ë²¤íŠ¸ì— ëŒ€í•´ì„œ í˜¸ì¶œí•  í•¨ìˆ˜
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);
 
-	// ¸¶¿ì½º ¹æÇâ ÀÌº¥Æ®¿¡ ´ëÇØ¼­ È£ÃâÇÒ ÇÔ¼ö
+	// ë§ˆìš°ìŠ¤ ë°©í–¥ ì´ë²¤íŠ¸ì— ëŒ€í•´ì„œ í˜¸ì¶œí•  í•¨ìˆ˜
 	void LookUp(float NewAxisValue);
 	void Turn(float NewAxisValue);
 
-	// View Change ÀÔ·Â ÀÌº¥Æ®°¡ ½ÇÇàÇÒ ¶§, È£ÃâÇÒ ÇÔ¼ö
+	// View Change ì…ë ¥ ì´ë²¤íŠ¸ê°€ ì‹¤í–‰í•  ë•Œ, í˜¸ì¶œí•  í•¨ìˆ˜
 	void ViewChange();
 
-	// °ø°İ ¸ùÅ¸ÁÖ°¡ ³¡³µÀ» ¶§, È£ÃâÇÒ ÇÔ¼ö.
-	// µ¨¸®°ÔÀÌÆ®·Î »ç¿ëÇÏ±â À§ÇØ UFUNCTION() ¸ÅÅ©·Î¸¦ »ç¿ë.
-	// ºí·çÇÁ¸°Æ®¿Í °ü·ÃµÈ C++ ÇÔ¼ö´Â ¸ğµÎ UFUNCTION() ¸ÅÅ©·Î¸¦ »ç¿ëÇØ¾ß ÇÔ.
-	// ºí·çÇÁ¸°Æ® °´Ã¼¿Í ¿¬µ¿ÇÏ´Â µ¨¸®°ÔÀÌÆ®¸¦ ¾ğ¸®¾ó ¿£Áø¿¡¼­´Â ´ÙÀÌ³ª¹Í µ¨¸®°ÔÀÌÆ®(Dynamic Delegate)¶ó°í ÇÔ.
+	// ê³µê²© ëª½íƒ€ì£¼ê°€ ëë‚¬ì„ ë•Œ, í˜¸ì¶œí•  í•¨ìˆ˜.
+	// ë¸ë¦¬ê²Œì´íŠ¸ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ UFUNCTION() ë§¤í¬ë¡œë¥¼ ì‚¬ìš©.
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì™€ ê´€ë ¨ëœ C++ í•¨ìˆ˜ëŠ” ëª¨ë‘ UFUNCTION() ë§¤í¬ë¡œë¥¼ ì‚¬ìš©í•´ì•¼ í•¨.
+	// ë¸”ë£¨í”„ë¦°íŠ¸ ê°ì²´ì™€ ì—°ë™í•˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ì–¸ë¦¬ì–¼ ì—”ì§„ì—ì„œëŠ” ë‹¤ì´ë‚˜ë¯¹ ë¸ë¦¬ê²Œì´íŠ¸(Dynamic Delegate)ë¼ê³  í•¨.
 	UFUNCTION()
 		void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
-	// ÄŞº¸ °ø°İÀÌ ½ÃÀÛÇÒ ¶§, °ü·Ã ¼Ó¼º ÁöÁ¤
+	// ì½¤ë³´ ê³µê²©ì´ ì‹œì‘í•  ë•Œ, ê´€ë ¨ ì†ì„± ì§€ì •
 	void AttackStartComboState();
 
-	// ÄŞº¸ °ø°İÀ» Á¾·áÇÒ ¶§, »ç¿ë
+	// ì½¤ë³´ ê³µê²©ì„ ì¢…ë£Œí•  ë•Œ, ì‚¬ìš©
 	void AttackEndComboState();
 
-	// °ø°İ È®ÀÎ
+	// ê³µê²© í™•ì¸
 	void AttackCheck();
 
-	// Config ÆÄÀÏ·ÎºÎÅÍ ¾Ö¼Â °æ·Î¸¦ °¡Á®¿Í ·ÎµùÀ» ¿Ï·áÇÒ ¶§, È£ÃâÇÒ ÇÔ¼ö
-	// ÇØ´ç ÇÔ¼ö¿¡¼­ ÇÚµé·¯·ÎºÎÅÍ ¾Ö¼ÂÀ» Ä³½ºÆÃÇØ Ä³¸¯ÅÍ ½ºÄÌ·¹Å» ¸Ş½Ã·Î µî·Ï
+	// Config íŒŒì¼ë¡œë¶€í„° ì• ì…‹ ê²½ë¡œë¥¼ ê°€ì ¸ì™€ ë¡œë”©ì„ ì™„ë£Œí•  ë•Œ, í˜¸ì¶œí•  í•¨ìˆ˜
+	// í•´ë‹¹ í•¨ìˆ˜ì—ì„œ í•¸ë“¤ëŸ¬ë¡œë¶€í„° ì• ì…‹ì„ ìºìŠ¤íŒ…í•´ ìºë¦­í„° ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œë¡œ ë“±ë¡
 	void OnAssetLoadCompleted();
 
-	// ABControllerÀÇ GetHUDWidgetÀ» BeginPlay·Î ¹Ù·Î È£ÃâÇÏÁö ¾Ê¾Æ null°ªÀÌ ¹İÈ¯µÇ´Â °ÍÀ» ¹æÁö
-	// HUD À§Á¬°ú Ä³¸¯ÅÍ ½ºÅİ ÄÄÆ÷³ÍÆ® ¿¬°á
+	// ABControllerì˜ GetHUDWidgetì„ BeginPlayë¡œ ë°”ë¡œ í˜¸ì¶œí•˜ì§€ ì•Šì•„ nullê°’ì´ ë°˜í™˜ë˜ëŠ” ê²ƒì„ ë°©ì§€
+	// HUD ìœ„ì ¯ê³¼ ìºë¦­í„° ìŠ¤í…Ÿ ì»´í¬ë„ŒíŠ¸ ì—°ê²°
 	UFUNCTION()
 		void DelayBindCharacterStat();
 
 protected:
 
-	// ÄÁÆ®·Ñ ¸ğµå ±¸ºĞ ¿­°ÅÇü
+	// ì»¨íŠ¸ë¡¤ ëª¨ë“œ êµ¬ë¶„ ì—´ê±°í˜•
 	enum class EControlMode
 	{
 		GTA,
@@ -136,95 +136,95 @@ protected:
 		NPC
 	};
 
-	// ¸ğµå¿¡ µû¸¥ ÄÁÆ®·Ñ ¸ğµå º¯°æ
+	// ëª¨ë“œì— ë”°ë¥¸ ì»¨íŠ¸ë¡¤ ëª¨ë“œ ë³€ê²½
 	void SetControlMode(EControlMode NewControlMode);
 
-	// ÇöÀç ÄÁÆ®·Ñ ¸ğµå Á¤º¸
+	// í˜„ì¬ ì»¨íŠ¸ë¡¤ ëª¨ë“œ ì •ë³´
 	EControlMode CurrentControlMode = EControlMode::GTA;
 
-	// °¢ ÃàÀÇ ÀÔ·ÂÀ» Á¶ÇÕÇØ º¸°ü
+	// ê° ì¶•ì˜ ì…ë ¥ì„ ì¡°í•©í•´ ë³´ê´€
 	FVector DirectionToMove = FVector::ZeroVector;
 
-	// ------------- ÄÁÆ®·Ñ ¸ğµå ÀüÈ¯À¸·Î ºÎµå·´°Ô ¿òÁ÷ÀÌ´Â ±â´É¿¡ °üÇÑ º¯¼ö --------------
+	// ------------- ì»¨íŠ¸ë¡¤ ëª¨ë“œ ì „í™˜ìœ¼ë¡œ ë¶€ë“œëŸ½ê²Œ ì›€ì§ì´ëŠ” ê¸°ëŠ¥ì— ê´€í•œ ë³€ìˆ˜ --------------
 
-	// º¯°æÇÒ ¸ñÇ¥ SpringArm °Å¸®
+	// ë³€ê²½í•  ëª©í‘œ SpringArm ê±°ë¦¬
 	float ArmLengthTo = 0.0f;
 
-	// º¯°æÇÒ ¸ñÇ¥ Camera È¸Àü°ª
+	// ë³€ê²½í•  ëª©í‘œ Camera íšŒì „ê°’
 	FRotator ArmRotationTo = FRotator::ZeroRotator;
 
-	// ÄÁÆ®·Ñ ¸ğµå ÀüÈ¯À¸·Î ºÎµå·´°Ô ¿òÁ÷ÀÏ ¶§, SpringArm º¯°æ ¼Óµµ
+	// ì»¨íŠ¸ë¡¤ ëª¨ë“œ ì „í™˜ìœ¼ë¡œ ë¶€ë“œëŸ½ê²Œ ì›€ì§ì¼ ë•Œ, SpringArm ë³€ê²½ ì†ë„
 	float ArmLengthSpeed = 0.0f;
 
-	// ÄÁÆ®·Ñ ¸ğµå ÀüÈ¯À¸·Î ºÎµå·´°Ô ¿òÁ÷ÀÏ ¶§, Camera È¸Àü ¼Óµµ
+	// ì»¨íŠ¸ë¡¤ ëª¨ë“œ ì „í™˜ìœ¼ë¡œ ë¶€ë“œëŸ½ê²Œ ì›€ì§ì¼ ë•Œ, Camera íšŒì „ ì†ë„
 	float ArmRotationSpeed = 0.0f;
 
 private:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
-	// °ø°İ ÁßÀÇ »óÅÂ ¿©ºÎ
+	// ê³µê²© ì¤‘ì˜ ìƒíƒœ ì—¬ë¶€
 		bool IsAttacking;
 
-	// Àü¹æ ¼±¾ğ : Çì´õ ÆÄÀÏ¿¡ ¼±¾ğÇÏ´Â °Í
-	// °°Àº ¸ğµâ¿¡ ÀÖ´Â ´Ù¸¥ Çì´õ ÆÄÀÏÀ» ÂüÁ¶ÇÏÁö ¾Ê¾Æµµ µÇ¹Ç·Î »óÈ£ ÂüÁ¶¸¦ ¹æÁöÇÏ°í ÄÚµå ±¸Á¶ °ü¸® ¿ëÀÌ
+	// ì „ë°© ì„ ì–¸ : í—¤ë” íŒŒì¼ì— ì„ ì–¸í•˜ëŠ” ê²ƒ
+	// ê°™ì€ ëª¨ë“ˆì— ìˆëŠ” ë‹¤ë¥¸ í—¤ë” íŒŒì¼ì„ ì°¸ì¡°í•˜ì§€ ì•Šì•„ë„ ë˜ë¯€ë¡œ ìƒí˜¸ ì°¸ì¡°ë¥¼ ë°©ì§€í•˜ê³  ì½”ë“œ êµ¬ì¡° ê´€ë¦¬ ìš©ì´
 
-	// ÇöÀç Ä³¸¯ÅÍÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½º
+	// í˜„ì¬ ìºë¦­í„°ì˜ ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤
 	UPROPERTY()
 		class UABAnimInstance* ABAnim;
 
-	// ´ÙÀ½ ÄŞº¸·ÎÀÇ ÀÌµ¿ °¡´É ¿©ºÎ
+	// ë‹¤ìŒ ì½¤ë³´ë¡œì˜ ì´ë™ ê°€ëŠ¥ ì—¬ë¶€
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		bool CanNextCombo;
 
-	// ÄŞº¸ ÀÔ·Â ¿©ºÎ
+	// ì½¤ë³´ ì…ë ¥ ì—¬ë¶€
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		bool IsComboInputOn;
 
-	// ÇöÀç ½ÇÇà ÁßÀÎ ÄŞº¸ Ä«¿îÅÍ
+	// í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ ì½¤ë³´ ì¹´ìš´í„°
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		int32 CurrentCombo;
 
-	// ÄŞº¸ Ä«¿îÅÍÀÇ ÃÖ´ëÄ¡
+	// ì½¤ë³´ ì¹´ìš´í„°ì˜ ìµœëŒ€ì¹˜
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		int32 MaxCombo;
 
-	// °ø°İ »ç°Å¸®
+	// ê³µê²© ì‚¬ê±°ë¦¬
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		float AttackRange;
 
-	// AI°¡ °ø°İÇÒ ¼ö ÀÖ´Â À¯È¿ °Å¸®
+	// AIê°€ ê³µê²©í•  ìˆ˜ ìˆëŠ” ìœ íš¨ ê±°ë¦¬
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		float AttackRadius;
 
-	// ¾Ö¼Â °æ·Î
+	// ì• ì…‹ ê²½ë¡œ
 	FSoftObjectPath CharacterAssetToLoad = FSoftObjectPath(nullptr);
 
-	// ºñµ¿±â·Î ¾Ö¼Â °¡Á®¿Ã ¼ö ÀÖ´Â ÇÚµé·¯
+	// ë¹„ë™ê¸°ë¡œ ì• ì…‹ ê°€ì ¸ì˜¬ ìˆ˜ ìˆëŠ” í•¸ë“¤ëŸ¬
 	TSharedPtr<struct FStreamableHandle> AssetStreamingHandle;
 
-	// ¾Ö¼Â ¹øÈ£
+	// ì• ì…‹ ë²ˆí˜¸
 	int32 AssetIndex = 0;
 
-	// ÇöÀç Ä³¸¯ÅÍ »óÅÂ
+	// í˜„ì¬ ìºë¦­í„° ìƒíƒœ
 	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = State, Meta = (AllowPrivateAccess = true))
 		ECharacterState CurrentState;
 
-	// ÇöÀç Ä³¸¯ÅÍ¸¦ ÇÃ·¹ÀÌ¾î°¡ Á¶Á¾ÇÏ´ÂÁö
+	// í˜„ì¬ ìºë¦­í„°ë¥¼ í”Œë ˆì´ì–´ê°€ ì¡°ì¢…í•˜ëŠ”ì§€
 	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = State, Meta = (AllowPrivateAccess = true))
 		bool bIsPlayer;
 
-	// AI ControllerÀÇ Å¬·¡½º
+	// AI Controllerì˜ í´ë˜ìŠ¤
 	UPROPERTY()
 		class AABAIController* ABAIController;
 
-	// Player Controller Å¬·¡½º
+	// Player Controller í´ë˜ìŠ¤
 	UPROPERTY()
 		class AABPlayerController* ABPlayerController;
 
-	// Å¸ÀÌ¸Ó¸¦ ¹ßµ¿½ÃÄÑ Á×Àº ÀÌÈÄ¿¡µµ ÀÛµ¿ÇÒ ¼ö ÀÖ´Â ÄÚµå
+	// íƒ€ì´ë¨¸ë¥¼ ë°œë™ì‹œì¼œ ì£½ì€ ì´í›„ì—ë„ ì‘ë™í•  ìˆ˜ ìˆëŠ” ì½”ë“œ
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = State, Meta = (AllowPrivateAccess = true))
 		float DeadTimer;
 
-	// »çÈÄ Å¸ÀÌ¸Ó ÇÚµé·¯
+	// ì‚¬í›„ íƒ€ì´ë¨¸ í•¸ë“¤ëŸ¬
 	FTimerHandle DeadTimerHandle = {};
 };

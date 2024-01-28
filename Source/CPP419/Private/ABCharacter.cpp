@@ -1,4 +1,4 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ğ¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œì„ê°œë°œì˜ ì •ì„'
 
 #include "ABCharacter.h"
 #include "ABAnimInstance.h"
@@ -23,31 +23,31 @@ AABCharacter::AABCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// ÄÄÆ÷³ÍÆ® Á¤ÀÇ
+	// ì»´í¬ë„ŒíŠ¸ ì •ì˜
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	CharacterStat = CreateDefaultSubobject<UABCharacterStatComponent>(TEXT("CHARACTERSTAT"));
 	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
 
-	// ===== °èÃş ±¸Á¶ ¼³Á¤ ======
+	// ===== ê³„ì¸µ êµ¬ì¡° ì„¤ì • ======
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
-	// Ã¼·Â UI¸¦ Ä³¸¯ÅÍ¿¡ ºÙÀÌ±â
+	// ì²´ë ¥ UIë¥¼ ìºë¦­í„°ì— ë¶™ì´ê¸°
 	HPBarWidget->SetupAttachment(GetMesh());
 
-	// ±âº»°ª ¼³Á¤
+	// ê¸°ë³¸ê°’ ì„¤ì •
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -88.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
-	// ½ºÄÌ·¹Å» ¸Ş½Ã ¼³Á¤
+	// ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ì„¤ì •
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Cardboard.SK_CharM_Cardboard"));
 	if (SK_CARDBOARD.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SK_CARDBOARD.Object);
 	}
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½º ¼³Á¤
+	// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤ ì„¤ì •
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM(TEXT("/Game/Book/Animations/WarriorAnimationBlueprint.WarriorAnimationBlueprint_C"));
@@ -57,49 +57,49 @@ AABCharacter::AABCharacter()
 
 	}
 
-	// ÄÁÆ®·Ñ ¸ğµå¸¦ 0¹øÀ¸·Î ¼³Á¤
+	// ì»¨íŠ¸ë¡¤ ëª¨ë“œë¥¼ 0ë²ˆìœ¼ë¡œ ì„¤ì •
 	SetControlMode(EControlMode::DIABLO);
 
-	// ºÎµå·´°Ô ¿òÁ÷ÀÏ ¶§, SpringArm°ú Camera ¼Óµµ ¼³Á¤
+	// ë¶€ë“œëŸ½ê²Œ ì›€ì§ì¼ ë•Œ, SpringArmê³¼ Camera ì†ë„ ì„¤ì •
 	ArmLengthSpeed = 3.0f;
 	ArmRotationSpeed = 10.0f;
 
-	// Á¡ÇÁ ³ôÀÌ Á¶Àı
+	// ì í”„ ë†’ì´ ì¡°ì ˆ
 	GetCharacterMovement()->JumpZVelocity = 800.0f;
 
-	// ÇöÀç °ø°İ »óÅÂ°¡ ¾Æ´Ï¶ó°í ¼³Á¤
+	// í˜„ì¬ ê³µê²© ìƒíƒœê°€ ì•„ë‹ˆë¼ê³  ì„¤ì •
 	IsAttacking = false;
 
-	// ÄŞº¸ °ø°İ ÃÖ´ëÄ¡ ¹× ÄŞº¸ Á¾·á »óÅÂ·Î ¼³Á¤
+	// ì½¤ë³´ ê³µê²© ìµœëŒ€ì¹˜ ë° ì½¤ë³´ ì¢…ë£Œ ìƒíƒœë¡œ ì„¤ì •
 	MaxCombo = 4;
 	AttackEndComboState();
 
-	// Ä¸½¶ ÄÄÆ÷³ÍÆ®ÀÇ Äİ¸®Àü ÇÁ¸®¼Â º¯°æ
+	// ìº¡ìŠ ì»´í¬ë„ŒíŠ¸ì˜ ì½œë¦¬ì „ í”„ë¦¬ì…‹ ë³€ê²½
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 
-	// °ø°İ »ç°Å¸®¿Í ¹üÀ§ ¼³Á¤
+	// ê³µê²© ì‚¬ê±°ë¦¬ì™€ ë²”ìœ„ ì„¤ì •
 	AttackRange = 80.0f;
 	AttackRadius = 50.0f;
 
-	// ===== Ã¼·Â UI =====
+	// ===== ì²´ë ¥ UI =====
 	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
-	// È­¸éÀ» Ç×»ó ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ ¹Ù¶óº¸µµ·Ï ÇÏ±â À§ÇØ ScreenÀ¸·Î ¼³Á¤.
+	// í™”ë©´ì„ í•­ìƒ í”Œë ˆì´ì–´ë¥¼ í–¥í•´ ë°”ë¼ë³´ë„ë¡ í•˜ê¸° ìœ„í•´ Screenìœ¼ë¡œ ì„¤ì •.
 	HPBarWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
 	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD(TEXT("/Game/Book/UI/UI_HPBar.UI_HPBar_C"));
 	if (UI_HUD.Succeeded())
 	{
-		// Ã¼·Â UI Å¬·¡½º ¼³Á¤ ¹× Ãâ·Â ¿µ¿ª ¼³Á¤
+		// ì²´ë ¥ UI í´ë˜ìŠ¤ ì„¤ì • ë° ì¶œë ¥ ì˜ì—­ ì„¤ì •
 		HPBarWidget->SetWidgetClass(UI_HUD.Class);
 		HPBarWidget->SetDrawSize(FVector2D(150.0f, 50.0f));
 	}
 
-	// AI Controller ¿¬°á
+	// AI Controller ì—°ê²°
 	AIControllerClass = AABAIController::StaticClass();
-	// ¿ùµå¿¡ ÀÖ°Å³ª ½ºÆùµÉ ¶§, ÀÚµ¿À¸·Î AI Controller°¡ È°¼ºÈ­µÇµµ·Ï ¼³Á¤
+	// ì›”ë“œì— ìˆê±°ë‚˜ ìŠ¤í°ë  ë•Œ, ìë™ìœ¼ë¡œ AI Controllerê°€ í™œì„±í™”ë˜ë„ë¡ ì„¤ì •
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	// CPP419Setting ¸ğµâÀÇ ABCharacterSetting.h·ÎºÎÅÍ Á¤º¸¸¦ °¡Á®¿Ã ¼ö ÀÖ´ÂÁö È®ÀÎ
+	// CPP419Setting ëª¨ë“ˆì˜ ABCharacterSetting.hë¡œë¶€í„° ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ìˆëŠ”ì§€ í™•ì¸
 	//auto DefaultSetting = GetDefault<UABCharacterSetting>();
 
 	//if (DefaultSetting->CharacterAssets.Num() > 0)
@@ -110,14 +110,14 @@ AABCharacter::AABCharacter()
 	//	}
 	//}
 
-	// Ä³¸¯ÅÍ ½ºÄÌ·¹Å» ¸Ş½Ã ¹øÈ£
+	// ìºë¦­í„° ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ë²ˆí˜¸
 	AssetIndex = 4;
-	// Ä³¸¯ÅÍ »óÅÂ ¼³Á¤
+	// ìºë¦­í„° ìƒíƒœ ì„¤ì •
 	SetActorHiddenInGame(true);
 	HPBarWidget->SetHiddenInGame(true);
 	bCanBeDamaged = false;
 
-	// »çÈÄ Å¸ÀÌ¸Ó ¼³Á¤
+	// ì‚¬í›„ íƒ€ì´ë¨¸ ì„¤ì •
 	DeadTimer = 5.0f;
 }
 
@@ -126,62 +126,62 @@ void AABCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//// ÇÃ·¹ÀÌ¾î°¡ ÄÁÆ®·ÑÇÏÁö ¾ÊÀ» °æ¿ì, ¾Ö¼Â °æ·Î¸¦ configÀÇ DefaultCPP419¿¡¼­ °¡Á®¿Í ÀÎ°ÔÀÓ µµÁß ºñµ¿±â·Î ¾Ö¼Â ·ÎµùÇÏ±â
+	//// í”Œë ˆì´ì–´ê°€ ì»¨íŠ¸ë¡¤í•˜ì§€ ì•Šì„ ê²½ìš°, ì• ì…‹ ê²½ë¡œë¥¼ configì˜ DefaultCPP419ì—ì„œ ê°€ì ¸ì™€ ì¸ê²Œì„ ë„ì¤‘ ë¹„ë™ê¸°ë¡œ ì• ì…‹ ë¡œë”©í•˜ê¸°
 	//if (!IsPlayerControlled())
 	//{
 	//	auto DefaultSetting = GetDefault<UABCharacterSetting>();
 	//	
-	//	// ¾Ö¼Â °æ·Î Áß ·£´ıÀ¸·Î ÇÏ³ª ¼±ÅÃ
+	//	// ì• ì…‹ ê²½ë¡œ ì¤‘ ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ì„ íƒ
 	//	int32 RandIndex = FMath::RandRange(0, DefaultSetting->CharacterAssets.Num() - 1);
 	//	CharacterAssetToLoad = DefaultSetting->CharacterAssets[RandIndex];
 
 	//	auto ABGameInstance = Cast<UABGameInstance>(GetGameInstance());
 	//	if (nullptr != ABGameInstance)
 	//	{
-	//		// ÇØ´ç ¾Ö¼ÂÀ» ·ÎµåÇÏ°í ¿Ï·áµÈ ÇÔ¼ö¸¦ È£Ãâ
+	//		// í•´ë‹¹ ì• ì…‹ì„ ë¡œë“œí•˜ê³  ì™„ë£Œëœ í•¨ìˆ˜ë¥¼ í˜¸ì¶œ
 	//		AssetStreamingHandle = ABGameInstance->StreamableManager.RequestAsyncLoad(CharacterAssetToLoad, FStreamableDelegate::CreateUObject(this, &AABCharacter::OnAssetLoadCompleted));
 	//	}
 	//}
 
-	// ÇöÀç Ä³¸¯ÅÍ¸¦ ÇÃ·¹ÀÌ¾î°¡ Á¶Á¾ÇÏ´ÂÁö È®ÀÎ
+	// í˜„ì¬ ìºë¦­í„°ë¥¼ í”Œë ˆì´ì–´ê°€ ì¡°ì¢…í•˜ëŠ”ì§€ í™•ì¸
 	bIsPlayer = IsPlayerControlled();
 	if (bIsPlayer)
 	{
-		// ÇÃ·¹ÀÌ¾îÀÎ °æ¿ì, ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¸¦ Ä³½ºÆÃ
+		// í”Œë ˆì´ì–´ì¸ ê²½ìš°, í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ìºìŠ¤íŒ…
 		ABPlayerController = Cast<AABPlayerController>(GetController());
 		ABCHECK(nullptr != ABPlayerController);
 	}
 	else
 	{
-		// AIÀÎ °æ¿ì, AI ÄÁÆ®·Ñ·¯¸¦ Ä³½ºÆÃ
+		// AIì¸ ê²½ìš°, AI ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ìºìŠ¤íŒ…
 		ABAIController = Cast<AABAIController>(GetController());
 		ABCHECK(nullptr != ABAIController);
 	}
 
-	// configÀÇ DefaultCPP419 ÆÄÀÏÀ» °¡Á®¿È.
+	// configì˜ DefaultCPP419 íŒŒì¼ì„ ê°€ì ¸ì˜´.
 	auto DefaultSetting = GetDefault<UABCharacterSetting>();
 
-	// ÇÃ·¹ÀÌ¾îÀÎ °æ¿ì, º»ÀÎÀÌ ¼±ÅÃÇÑ Ä³¸¯ÅÍ ¹øÈ£·Î Ä³¸¯ÅÍ ¼³Á¤
+	// í”Œë ˆì´ì–´ì¸ ê²½ìš°, ë³¸ì¸ì´ ì„ íƒí•œ ìºë¦­í„° ë²ˆí˜¸ë¡œ ìºë¦­í„° ì„¤ì •
 	if (bIsPlayer)
 	{
 		auto ABPlayerState = Cast<AABPlayerState>(PlayerState);
 		ABCHECK(nullptr != ABPlayerState);
 		AssetIndex = ABPlayerState->GetCharacterIndex();
 	}
-	// AIÀÎ °æ¿ì¿¡´Â config ÆÄÀÏÀÇ ¾Ö¼Â °æ·Î Áß ·£´ıÀ¸·Î ÇÏ³ª °¡Á®¿À±â
+	// AIì¸ ê²½ìš°ì—ëŠ” config íŒŒì¼ì˜ ì• ì…‹ ê²½ë¡œ ì¤‘ ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ê°€ì ¸ì˜¤ê¸°
 	else
 	{
 		AssetIndex = FMath::RandRange(0, DefaultSetting->CharacterAssets.Num() - 1);
 	}
 
-	// Ä³¸¯ÅÍ ½ºÄÌ·¹Å» ¸Ş½Ã ¼³Á¤
+	// ìºë¦­í„° ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ì„¤ì •
 	CharacterAssetToLoad = DefaultSetting->CharacterAssets[AssetIndex];
-	// GameInstance °¡Á®¿À±â
+	// GameInstance ê°€ì ¸ì˜¤ê¸°
 	auto ABGameInstance = Cast<UABGameInstance>(GetGameInstance());
 	ABCHECK(nullptr != ABGameInstance);
-	// ºñµ¿±â ·Îµù
+	// ë¹„ë™ê¸° ë¡œë”©
 	AssetStreamingHandle = ABGameInstance->StreamableManager.RequestAsyncLoad(CharacterAssetToLoad, FStreamableDelegate::CreateUObject(this, &AABCharacter::OnAssetLoadCompleted));
-	// Ä³¸¯ÅÍ »óÅÂ¸¦ LoadingÀ¸·Î º¯°æ
+	// ìºë¦­í„° ìƒíƒœë¥¼ Loadingìœ¼ë¡œ ë³€ê²½
 	SetCharacterState(ECharacterState::LOADING);
 }
 
@@ -190,36 +190,36 @@ void AABCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// SpringArmÀÇ °Å¸®¸¦ ºÎµå·´°Ô º¯°æ
+	// SpringArmì˜ ê±°ë¦¬ë¥¼ ë¶€ë“œëŸ½ê²Œ ë³€ê²½
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
 
-	// ¸ğµå º¯°æÀ¸·Î ÀÎÇÑ º¯°æ ±â´É
+	// ëª¨ë“œ ë³€ê²½ìœ¼ë¡œ ì¸í•œ ë³€ê²½ ê¸°ëŠ¥
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
 		break;
 
 	case EControlMode::DIABLO:
-		// ¸ğµå º¯°æ½Ã, Ä«¸Ş¶ó°¡ ºÎµå·´°Ô È¸ÀüµÇµµ·Ï ¼³Á¤
+		// ëª¨ë“œ ë³€ê²½ì‹œ, ì¹´ë©”ë¼ê°€ ë¶€ë“œëŸ½ê²Œ íšŒì „ë˜ë„ë¡ ì„¤ì •
 		SpringArm->RelativeRotation = FMath::RInterpTo(SpringArm->RelativeRotation, ArmRotationTo, DeltaTime, ArmRotationSpeed);
 		break;
 	}
 
-	// Å°º¸µå¸¦ ÅëÇÑ ÀÌµ¿ °ü·Ã ±â´É
+	// í‚¤ë³´ë“œë¥¼ í†µí•œ ì´ë™ ê´€ë ¨ ê¸°ëŠ¥
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// ´Ù¸¥ È£Ãâ ÇÔ¼ö¿¡¼­ ÀÌ¹Ì Á¤ÀÇ
+		// ë‹¤ë¥¸ í˜¸ì¶œ í•¨ìˆ˜ì—ì„œ ì´ë¯¸ ì •ì˜
 		break;
 
 	case EControlMode::DIABLO:
-		// ÀÌµ¿ ¹æÇâ Å©±â Á¦°öÀÌ 0º¸´Ù Å¬¶§
+		// ì´ë™ ë°©í–¥ í¬ê¸° ì œê³±ì´ 0ë³´ë‹¤ í´ë•Œ
 		if (DirectionToMove.SizeSquared() > 0.0f)
 		{
-			// Ä³¸¯ÅÍ ÀÌµ¿ ¹æÇâ ¼³Á¤
+			// ìºë¦­í„° ì´ë™ ë°©í–¥ ì„¤ì •
 			GetController()->SetControlRotation(FRotationMatrix::MakeFromX(DirectionToMove).Rotator());
 
-			// Ä³¸¯ÅÍ ¿òÁ÷ÀÌ´Â ¹æÇâ ÁÖ±â
+			// ìºë¦­í„° ì›€ì§ì´ëŠ” ë°©í–¥ ì£¼ê¸°
 			AddMovementInput(DirectionToMove);
 		}
 		break;
@@ -232,114 +232,114 @@ void AABCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	// Å°º¸µå ÀÌº¥Æ®¿Í ¿¬°á
+	// í‚¤ë³´ë“œ ì´ë²¤íŠ¸ì™€ ì—°ê²°
 	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AABCharacter::UpDown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABCharacter::LeftRight);
 
-	// ¸¶¿ì½º ÀÌº¥Æ®¿Í ¿¬°á
+	// ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì™€ ì—°ê²°
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AABCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AABCharacter::Turn);
 
-	// Ä«¸Ş¶ó ºä º¯°æ ÀÌº¥Æ®
+	// ì¹´ë©”ë¼ ë·° ë³€ê²½ ì´ë²¤íŠ¸
 	PlayerInputComponent->BindAction(TEXT("ViewChange"), EInputEvent::IE_Pressed, this, &AABCharacter::ViewChange);
 
-	// Á¡ÇÁ Ãß°¡ : Character Å¬·¡½º¿¡ ÀÌ¹Ì Jump ÇÔ¼ö Ãß°¡µÇ¾î ÀÖÀ½
+	// ì í”„ ì¶”ê°€ : Character í´ë˜ìŠ¤ì— ì´ë¯¸ Jump í•¨ìˆ˜ ì¶”ê°€ë˜ì–´ ìˆìŒ
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 
-	// ¸¶¿ì½º ¿ŞÂÊ Å¬¸¯ : °ø°İ
+	// ë§ˆìš°ìŠ¤ ì™¼ìª½ í´ë¦­ : ê³µê²©
 	PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed, this, &AABCharacter::Attack);
 }
 
-// À§¾Æ·¡ ¹æÇâÅ°¸¦ ´­·¶À» ¶§, ÇØ´ç ÇÔ¼ö¸¦ È£ÃâÇÏ°í Ä³¸¯ÅÍ°¡ ÀÌµ¿ÇÏµµ·Ï ¼³Á¤
+// ìœ„ì•„ë˜ ë°©í–¥í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ, í•´ë‹¹ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  ìºë¦­í„°ê°€ ì´ë™í•˜ë„ë¡ ì„¤ì •
 void AABCharacter::UpDown(float NewAxisValue)
 {
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// ÄÁÆ®·Ñ È¸Àü°ª = Ä«¸Ş¶ó°¡ ¹Ù¶óº¸°í ÀÖ´Â °ªÀ¸·Î ÀÌµ¿
+		// ì»¨íŠ¸ë¡¤ íšŒì „ê°’ = ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ê³  ìˆëŠ” ê°’ìœ¼ë¡œ ì´ë™
 		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
 
-		// Á¤¸éÀ¸·Î Ä³¸¯ÅÍ ÀÌµ¿
+		// ì •ë©´ìœ¼ë¡œ ìºë¦­í„° ì´ë™
 		// AddMovementInput(GetActorForwardVector(), NewAxisValue);
 		break;
 
 	case EControlMode::DIABLO:
-		// XÃà ÀÌµ¿ Á¤µµ¸¦ ÀúÀå
+		// Xì¶• ì´ë™ ì •ë„ë¥¼ ì €ì¥
 		DirectionToMove.X = NewAxisValue;
 		break;
 	}
 }
 
-// ¿ŞÂÊ ¿À¸¥ÂÊ ¹æÇâÅ°¸¦ ´­·¶À» ¶§, ÇØ´ç ÇÔ¼ö¸¦ È£ÃâÇÏ°í Ä³¸¯ÅÍ°¡ ÀÌµ¿ÇÏµµ·Ï ¼³Á¤
+// ì™¼ìª½ ì˜¤ë¥¸ìª½ ë°©í–¥í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ, í•´ë‹¹ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  ìºë¦­í„°ê°€ ì´ë™í•˜ë„ë¡ ì„¤ì •
 void AABCharacter::LeftRight(float NewAxisValue)
 {
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// ÄÁÆ®·Ñ È¸Àü°ª = Ä«¸Ş¶ó°¡ ¹Ù·Îº¸°í ÀÖ´Â ¿ìÃø °ªÀ¸·Î ÀÌµ¿
+		// ì»¨íŠ¸ë¡¤ íšŒì „ê°’ = ì¹´ë©”ë¼ê°€ ë°”ë¡œë³´ê³  ìˆëŠ” ìš°ì¸¡ ê°’ìœ¼ë¡œ ì´ë™
 		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 
-		// ¿ìÃøÀ¸·Î Ä³¸¯ÅÍ ÀÌµ¿
+		// ìš°ì¸¡ìœ¼ë¡œ ìºë¦­í„° ì´ë™
 		// AddMovementInput(GetActorRightVector(), NewAxisValue);
 		break;
 
 	case EControlMode::DIABLO:
-		// YÃà ÀÌµ¿ Á¤µµ¸¦ ÀúÀå
+		// Yì¶• ì´ë™ ì •ë„ë¥¼ ì €ì¥
 		DirectionToMove.Y = NewAxisValue;
 		break;
 	}
 }
 
-// ¸¶¿ì½º¸¦ À§¾Æ·¡ ¹æÇâÀ¸·Î ¿òÁ÷¿´À» ¶§, ÇØ´ç ÇÔ¼ö¸¦ È£ÃâÇÏ°í Ä«¸Ş¶ó ¹æÇâ º¯°æ
+// ë§ˆìš°ìŠ¤ë¥¼ ìœ„ì•„ë˜ ë°©í–¥ìœ¼ë¡œ ì›€ì§ì˜€ì„ ë•Œ, í•´ë‹¹ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  ì¹´ë©”ë¼ ë°©í–¥ ë³€ê²½
 void AABCharacter::LookUp(float NewAxisValue)
 {
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// YÃàÀÇ ½ÃÁ¡ º¯°æ
+		// Yì¶•ì˜ ì‹œì  ë³€ê²½
 		AddControllerPitchInput(NewAxisValue);
 		break;
 
 	case EControlMode::DIABLO:
-		// Ä«¸Ş¶ó ½ÃÁ¡ÀÌ °íÁ¤ÀÌ¿©¼­ ÇÊ¿ä ¾øÀ½
+		// ì¹´ë©”ë¼ ì‹œì ì´ ê³ ì •ì´ì—¬ì„œ í•„ìš” ì—†ìŒ
 		break;
 	}
 }
 
-// ¸¶¿ì½º¸¦ ¿ŞÂÊ ¿À¸¥ÂÊ ¹æÇâÀ¸·Î ¿òÁ÷¿´À» ¶§, ÇØ´ç ÇÔ¼ö¸¦ È£ÃâÇÏ°í Ä«¸Ş¶ó ¹æÇâ º¯°æ
+// ë§ˆìš°ìŠ¤ë¥¼ ì™¼ìª½ ì˜¤ë¥¸ìª½ ë°©í–¥ìœ¼ë¡œ ì›€ì§ì˜€ì„ ë•Œ, í•´ë‹¹ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  ì¹´ë©”ë¼ ë°©í–¥ ë³€ê²½
 void AABCharacter::Turn(float NewAxisValue)
 {
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// XÃàÀÇ ½ÃÁ¡ º¯°æ
+		// Xì¶•ì˜ ì‹œì  ë³€ê²½
 		AddControllerYawInput(NewAxisValue);
 		break;
 
 	case EControlMode::DIABLO:
-		// Ä«¸Ş¶ó ½ÃÁ¡ÀÌ °íÁ¤ÀÌ¿©¼­ ÇÊ¿ä ¾øÀ½
+		// ì¹´ë©”ë¼ ì‹œì ì´ ê³ ì •ì´ì—¬ì„œ í•„ìš” ì—†ìŒ
 		break;
 	}
 }
 
-// ÄÁÆ®·Ñ ¸ğµå¿¡ µû¶ó ¼³Á¤ º¯°æ
+// ì»¨íŠ¸ë¡¤ ëª¨ë“œì— ë”°ë¼ ì„¤ì • ë³€ê²½
 void AABCharacter::SetControlMode(EControlMode NewControlMode)
 {
-	// »õ·Ó°Ô º¯°æµÈ ÄÁÆ®·Ñ ¸ğµå ÀúÀå
+	// ìƒˆë¡­ê²Œ ë³€ê²½ëœ ì»¨íŠ¸ë¡¤ ëª¨ë“œ ì €ì¥
 	CurrentControlMode = NewControlMode;
 
 	switch (CurrentControlMode)
 	{
 
-	// GTA ¸ğµåÀÇ ÄÁÆ®·Ñ ¹æ½Ä Àû¿ë
+	// GTA ëª¨ë“œì˜ ì»¨íŠ¸ë¡¤ ë°©ì‹ ì ìš©
 	case EControlMode::GTA:
 		// SpringArm->TargetArmLength = 450.0f;
 		// SpringArm->SetRelativeRotation(FRotator::ZeroRotator);
 
-		// SpringArm °Å¸®¿Í Camera È¸Àü ¸ñÇ¥°ª ¼³Á¤
+		// SpringArm ê±°ë¦¬ì™€ Camera íšŒì „ ëª©í‘œê°’ ì„¤ì •
 		ArmLengthTo = 450.0f;
 
-		// SpringArmÀº »ç¿ëÀÚÀÇ ¸¶¿ì½º ¿òÁ÷ÀÓ¿¡ µû¶ó È¸ÀüÇÏµµ·Ï ¼³Á¤
+		// SpringArmì€ ì‚¬ìš©ìì˜ ë§ˆìš°ìŠ¤ ì›€ì§ì„ì— ë”°ë¼ íšŒì „í•˜ë„ë¡ ì„¤ì •
 		SpringArm->bUsePawnControlRotation = true;
 
 		SpringArm->bInheritPitch = true;
@@ -348,48 +348,48 @@ void AABCharacter::SetControlMode(EControlMode NewControlMode)
 
 		SpringArm->bDoCollisionTest = true;
 
-		// ¸¶¿ì½º ÁÂ¿ì ¿òÁ÷ÀÓ¸¸ Ä«¸Ş¶ó¿¡ ¿µÇâÀÌ °¡´Â ¼³Á¤À» ÇØÁ¦
+		// ë§ˆìš°ìŠ¤ ì¢Œìš° ì›€ì§ì„ë§Œ ì¹´ë©”ë¼ì— ì˜í–¥ì´ ê°€ëŠ” ì„¤ì •ì„ í•´ì œ
 		bUseControllerRotationYaw = false;
 
-		// Ä³¸¯ÅÍ°¡ ¿òÁ÷ÀÌ´Â ¹æÇâÀ¸·Î Ä³¸¯ÅÍ¸¦ ÀÚµ¿À¸·Î È¸Àü½ÃÅ´ -> CharacterMovement·Î ¼³Á¤
+		// ìºë¦­í„°ê°€ ì›€ì§ì´ëŠ” ë°©í–¥ìœ¼ë¡œ ìºë¦­í„°ë¥¼ ìë™ìœ¼ë¡œ íšŒì „ì‹œí‚´ -> CharacterMovementë¡œ ì„¤ì •
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 
-		// Ä³¸¯ÅÍ ºÎµå·´°Ô È¸ÀüÇÏµµ·Ï ¼³Á¤
+		// ìºë¦­í„° ë¶€ë“œëŸ½ê²Œ íšŒì „í•˜ë„ë¡ ì„¤ì •
 		GetCharacterMovement()->bUseControllerDesiredRotation = false;
 		GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 		break;
 
-	// µğ¾Æºí·Î ¸ğµåÀÇ ÄÁÆ®·Ñ ¹æ½Ä Àû¿ë
+	// ë””ì•„ë¸”ë¡œ ëª¨ë“œì˜ ì»¨íŠ¸ë¡¤ ë°©ì‹ ì ìš©
 	case EControlMode::DIABLO:
 		// SpringArm->TargetArmLength = 800.0f;
 		// SpringArm->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
 
-		// SpringArm °Å¸®¿Í Camera È¸Àü ¸ñÇ¥°ª ¼³Á¤
+		// SpringArm ê±°ë¦¬ì™€ Camera íšŒì „ ëª©í‘œê°’ ì„¤ì •
 		ArmLengthTo = 800.0f;
 		ArmRotationTo = FRotator(-45.0f, 0.0f, 0.0f);
 		
-		// SpringArmÀº »ç¿ëÀÚÀÇ ¸¶¿ì½º ¿òÁ÷ÀÓ¿¡ µû¶ó È¸ÀüÇÏÁö ¾Êµµ·Ï ¼³Á¤
+		// SpringArmì€ ì‚¬ìš©ìì˜ ë§ˆìš°ìŠ¤ ì›€ì§ì„ì— ë”°ë¼ íšŒì „í•˜ì§€ ì•Šë„ë¡ ì„¤ì •
 		SpringArm->bUsePawnControlRotation = false;
 
 		SpringArm->bInheritPitch = false;
 		SpringArm->bInheritRoll = false;
 		SpringArm->bInheritYaw = false;
 
-		// ÄÃ¸®Àü°ú ¿¬µ¿µÇÁö ¾Êµµ·Ï ¼³Á¤
+		// ì»¬ë¦¬ì „ê³¼ ì—°ë™ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
 		SpringArm->bDoCollisionTest = false;
 
-		// ¸¶¿ì½º°¡ ZÃàÀ¸·Î ¿òÁ÷ÀÏ ¶§, Ä«¸Ş¶ó°¡ È¸ÀüÇÏµµ·Ï ¼³Á¤
-		// Ä³¸¯ÅÍ ºÎµå·´°Ô È¸ÀüÇÏµµ·Ï ¼³Á¤
+		// ë§ˆìš°ìŠ¤ê°€ Zì¶•ìœ¼ë¡œ ì›€ì§ì¼ ë•Œ, ì¹´ë©”ë¼ê°€ íšŒì „í•˜ë„ë¡ ì„¤ì •
+		// ìºë¦­í„° ë¶€ë“œëŸ½ê²Œ íšŒì „í•˜ë„ë¡ ì„¤ì •
 		bUseControllerRotationYaw = false;
 		GetCharacterMovement()->bOrientRotationToMovement = false;
 		GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 		break;
 
-	// NPC ¸ğµåÀÇ ÄÁÆ®·Ñ ¹æ½Ä Àû¿ë
+	// NPC ëª¨ë“œì˜ ì»¨íŠ¸ë¡¤ ë°©ì‹ ì ìš©
 	case EControlMode::NPC:
 
-		// ÀÚ¿¬½º·´°Ô È¸ÀüÇÒ ¼ö ÀÖµµ·Ï ¼³Á¤
+		// ìì—°ìŠ¤ëŸ½ê²Œ íšŒì „í•  ìˆ˜ ìˆë„ë¡ ì„¤ì •
 		bUseControllerRotationYaw = false;
 		GetCharacterMovement()->bUseControllerDesiredRotation = false;
 		GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -398,34 +398,34 @@ void AABCharacter::SetControlMode(EControlMode NewControlMode)
 	}
 }
 
-// Ä«¸Ş¶ó ºä ¸ğµå¸¦ º¯°æÇÏ´Â ÀÌº¥Æ®¸¦ ½ÇÇàÇÒ ¶§, È£ÃâµÇ´Â ÇÔ¼ö
+// ì¹´ë©”ë¼ ë·° ëª¨ë“œë¥¼ ë³€ê²½í•˜ëŠ” ì´ë²¤íŠ¸ë¥¼ ì‹¤í–‰í•  ë•Œ, í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
 void AABCharacter::ViewChange()
 {
-	// ¼­·Î ¹İ´ëÀÇ ¸ğµå°¡ ¼±ÅÃµÇµµ·Ï ¼³Á¤
+	// ì„œë¡œ ë°˜ëŒ€ì˜ ëª¨ë“œê°€ ì„ íƒë˜ë„ë¡ ì„¤ì •
 	switch (CurrentControlMode)
 	{
 	case EControlMode::GTA:
-		// Ä«¸Ş¶ó È¸ÀüÀ» ÇöÀç Ä³¸¯ÅÍÀÇ È¸Àü°ªÀ¸·Î ¼³Á¤
+		// ì¹´ë©”ë¼ íšŒì „ì„ í˜„ì¬ ìºë¦­í„°ì˜ íšŒì „ê°’ìœ¼ë¡œ ì„¤ì •
 		GetController()->SetControlRotation(GetActorRotation());
 		SetControlMode(EControlMode::DIABLO);
 		break;
 
 	case EControlMode::DIABLO:
-		// Ä«¸Ş¶ó È¸ÀüÀ» SpringArm È¸Àü°ªÀ¸·Î ¼³Á¤
+		// ì¹´ë©”ë¼ íšŒì „ì„ SpringArm íšŒì „ê°’ìœ¼ë¡œ ì„¤ì •
 		GetController()->SetControlRotation(SpringArm->RelativeRotation);
 		SetControlMode(EControlMode::GTA);
 		break;
 	}
 }
 
-// °ø°İ Å° ÀÔ·Â -> ¹Ø¿¡ ÇÔ¼öÀÇ else·Î È£Ãâ -> °ø°İ Å° ¶Ç ÀÔ·Â -> Notify_NextAttack? ÇÔ¼ö È£Ãâ·Î °Ë»ç -> ´ÙÀ½ °ø°İ ¼øÀ¸·Î ÁøÇà
+// ê³µê²© í‚¤ ì…ë ¥ -> ë°‘ì— í•¨ìˆ˜ì˜ elseë¡œ í˜¸ì¶œ -> ê³µê²© í‚¤ ë˜ ì…ë ¥ -> Notify_NextAttack? í•¨ìˆ˜ í˜¸ì¶œë¡œ ê²€ì‚¬ -> ë‹¤ìŒ ê³µê²© ìˆœìœ¼ë¡œ ì§„í–‰
 
-// ¸¶¿ì½º Å¬¸¯ÇßÀ» ¶§, °ø°İÇÏ´Â ÇÔ¼ö È£Ãâ
+// ë§ˆìš°ìŠ¤ í´ë¦­í–ˆì„ ë•Œ, ê³µê²©í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
 void AABCharacter::Attack()
 {
 	//ABLOG_S(Warning);
 
-	// °ø°İ Áß
+	// ê³µê²© ì¤‘
 	if (IsAttacking)
 	{
 		ABCHECK(FMath::IsWithinInclusive<int32>(CurrentCombo, 1, MaxCombo));
@@ -435,10 +435,10 @@ void AABCharacter::Attack()
 		}
 	}
 	
-	// °ø°İ ÁßÀÌ ¾Æ´Ô.
+	// ê³µê²© ì¤‘ì´ ì•„ë‹˜.
 	else
 	{
-		// ÇöÀç ÄŞº¸ ¹øÈ£°¡ 0¹øÀÏ ¶§¸¸, ½ÇÇà
+		// í˜„ì¬ ì½¤ë³´ ë²ˆí˜¸ê°€ 0ë²ˆì¼ ë•Œë§Œ, ì‹¤í–‰
 		ABCHECK(CurrentCombo == 0);
 		AttackStartComboState();
 		ABAnim->PlayAttackMontage();
@@ -446,10 +446,10 @@ void AABCharacter::Attack()
 		IsAttacking = true;
 	}
 
-	//// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½º ¾ò±â
+	//// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤ ì–»ê¸°
 	//auto AnimInstance = Cast<UABAnimInstance>(GetMesh()->GetAnimInstance());
 
-	//// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½º°¡ Á¤»óÀûÀ¸·Î Ä³½ºÆÃµÇ°í nullÀÌ ¾Æ´Ò °æ¿ì¿¡¸¸ ÁøÇà
+	//// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤ê°€ ì •ìƒì ìœ¼ë¡œ ìºìŠ¤íŒ…ë˜ê³  nullì´ ì•„ë‹ ê²½ìš°ì—ë§Œ ì§„í–‰
 	//if (nullptr == AnimInstance)
 	//{
 	//	return;
@@ -460,45 +460,45 @@ void AABCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½º °¡Á®¿À±â
+	// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ìŠ¤ ê°€ì ¸ì˜¤ê¸°
 	// auto AnimInstance = Cast<UAnimInstance>(GetMesh()->GetAnimInstance());
 	ABAnim = Cast<UABAnimInstance>(GetMesh()->GetAnimInstance());
 
-	// AnimInstance°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í ¾øÀ¸¸é, ¹Ù·Î ÇöÀç ÇÔ¼ö¸¦ Á¾·á
+	// AnimInstanceê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ì—†ìœ¼ë©´, ë°”ë¡œ í˜„ì¬ í•¨ìˆ˜ë¥¼ ì¢…ë£Œ
 	ABCHECK(nullptr != ABAnim);
 
-	// OnMontageEnded µ¨¸®°ÔÀÌÆ®´Â UAnimInstance¿¡ ¼±¾ğµÇ¾î ÀÖÀ½.
-	// ºí·çÇÁ¸°Æ®¿Í È£È¯µÇ´Â ¼ºÁú ¿Ü¿¡µµ ¿©·¯ °³ÀÇ ÇÔ¼ö¸¦ ¹ŞÀ» ¼ö ÀÖ¾î Çàµ¿ÀÌ Á¾·áµÇ¸é, µî·ÏµÈ ¸ğµç ÇÔ¼öµé¿¡°Ô ¸ğµÎ ¾Ë·ÁÁÖ´Â ±â´Éµµ Æ÷ÇÔ.
-	// ÀÌ¸¦ ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®(Multicast Delegate)¶ó°íµµ ÇÔ.
+	// OnMontageEnded ë¸ë¦¬ê²Œì´íŠ¸ëŠ” UAnimInstanceì— ì„ ì–¸ë˜ì–´ ìˆìŒ.
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì™€ í˜¸í™˜ë˜ëŠ” ì„±ì§ˆ ì™¸ì—ë„ ì—¬ëŸ¬ ê°œì˜ í•¨ìˆ˜ë¥¼ ë°›ì„ ìˆ˜ ìˆì–´ í–‰ë™ì´ ì¢…ë£Œë˜ë©´, ë“±ë¡ëœ ëª¨ë“  í•¨ìˆ˜ë“¤ì—ê²Œ ëª¨ë‘ ì•Œë ¤ì£¼ëŠ” ê¸°ëŠ¥ë„ í¬í•¨.
+	// ì´ë¥¼ ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸(Multicast Delegate)ë¼ê³ ë„ í•¨.
 	
 	// DECLARE_DYNAMIC_MULTICAST_TwoParams(FOnMontageEndedMCDelegate, UAnimMontage* Montage, bool bIsInterrupted);
 
-	// ½Ã±×´ÏÃ³(Signature) : ¾ğ¸®¾ó ¿£Áø¿¡¼­ µ¨¸®°ÔÀÌÆ®ÀÇ ¼±¾ğÀº ¾ğ¸®¾óÀÌ Á¦°øÇÏ´Â ¸ÅÅ©·Î¸¦ ÅëÇØ Á¤ÀÇ. ÀÌ·¸°Ô Á¤ÀÇµÈ µ¨¸®°ÔÀÌÆ® Çü½ÄÀ» ½Ã±×´ÏÃ³¶ó°í ÇÔ.
+	// ì‹œê·¸ë‹ˆì²˜(Signature) : ì–¸ë¦¬ì–¼ ì—”ì§„ì—ì„œ ë¸ë¦¬ê²Œì´íŠ¸ì˜ ì„ ì–¸ì€ ì–¸ë¦¬ì–¼ì´ ì œê³µí•˜ëŠ” ë§¤í¬ë¡œë¥¼ í†µí•´ ì •ì˜. ì´ë ‡ê²Œ ì •ì˜ëœ ë¸ë¦¬ê²Œì´íŠ¸ í˜•ì‹ì„ ì‹œê·¸ë‹ˆì²˜ë¼ê³  í•¨.
 
-	// µÎ °¡Áö ±â´ÉÀÌ ÀÖ´Â OnMontageEnded µ¨¸®°ÔÀÌÆ® : ´ÙÀÌ³»¹Í ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®
-	// ´ÙÀÌ³»¹Í ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®´Â AddDynamic ÇÔ¼ö¸¦ »ç¿ëÇÒ ¼ö ÀÖ´Âµ¥ ÀÌ ÇÔ¼ö´Â C++ ÀÎÅÚ¸®¼¾½º¿¡ °Ë»öµÇÁö ¾Ê´Â´Ù.
-	// ÀÎÅÚ¸®¼¾½º¸¦ ¹«½ÃÇÏ°í Å¸ÀÌÇÎÇØµµ ÄÄÆÄÀÏ¿¡ ¹®Á¦ ¾øÀ½.
+	// ë‘ ê°€ì§€ ê¸°ëŠ¥ì´ ìˆëŠ” OnMontageEnded ë¸ë¦¬ê²Œì´íŠ¸ : ë‹¤ì´ë‚´ë¯¹ ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸
+	// ë‹¤ì´ë‚´ë¯¹ ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ëŠ” AddDynamic í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ”ë° ì´ í•¨ìˆ˜ëŠ” C++ ì¸í…”ë¦¬ì„¼ìŠ¤ì— ê²€ìƒ‰ë˜ì§€ ì•ŠëŠ”ë‹¤.
+	// ì¸í…”ë¦¬ì„¼ìŠ¤ë¥¼ ë¬´ì‹œí•˜ê³  íƒ€ì´í•‘í•´ë„ ì»´íŒŒì¼ì— ë¬¸ì œ ì—†ìŒ.
 
-	// ¾Ö´Ô ÀÎ½ºÅÏ½ºÀÇ OnMontageEnded µ¨¸®°ÔÀÌÆ®¿Í ¿ì¸®°¡ ¼±¾ğÇÑ OnAttackMontageEnded¸¦ ¿¬°á
-	// µ¨¸®°ÔÀÌÆ®°¡ ¹ßµ¿ÇÒ ¶§±îÁö ¾Ö´Ï¸ŞÀÌ¼Ç ½Ã½ºÅÛ¿¡ ¸ùÅ¸ÁÖ Àç»ı ¸í·ÉÀ» ³»¸®Áö ¸øÇÏ°Ô Æù ·ÎÁ÷¿¡¼­ ¹æÁö
+	// ì• ë‹˜ ì¸ìŠ¤í„´ìŠ¤ì˜ OnMontageEnded ë¸ë¦¬ê²Œì´íŠ¸ì™€ ìš°ë¦¬ê°€ ì„ ì–¸í•œ OnAttackMontageEndedë¥¼ ì—°ê²°
+	// ë¸ë¦¬ê²Œì´íŠ¸ê°€ ë°œë™í•  ë•Œê¹Œì§€ ì• ë‹ˆë©”ì´ì…˜ ì‹œìŠ¤í…œì— ëª½íƒ€ì£¼ ì¬ìƒ ëª…ë ¹ì„ ë‚´ë¦¬ì§€ ëª»í•˜ê²Œ í° ë¡œì§ì—ì„œ ë°©ì§€
 	ABAnim->OnMontageEnded.AddDynamic(this, &AABCharacter::OnAttackMontageEnded);
 
-	// ======= ¶÷´Ù½Ä =======
+	// ======= ëŒë‹¤ì‹ =======
 
-	// ¶÷´Ù ¼Ò°³ÀÚ(Lambda Introducer) : []·Î Ç¥½Ã, ¶÷´Ù ±¸¹®ÀÌ ÂüÁ¶ÇÒ È¯°æÀ» ÁöÁ¤.
-	// ¶÷´Ù ÇÔ¼ö°¡ ÂüÁ¶ÇÒ È¯°æÀ» Ä¸Ã³(Capture)¶ó°í ÇÔ.
-	// ¿©±â¼­´Â ÇöÀç ¶÷´Ù ±¸¹®ÀÌ ÀÎ½ºÅÏ½ºÀÇ °ü·Ã ¸â¹ö ÇÔ¼ö¿Í º¯¼ö¸¦ »ç¿ëÇÏ¹Ç·Î Ä¸Ã³ È¯°æÀ» this·Î ÁöÁ¤.
+	// ëŒë‹¤ ì†Œê°œì(Lambda Introducer) : []ë¡œ í‘œì‹œ, ëŒë‹¤ êµ¬ë¬¸ì´ ì°¸ì¡°í•  í™˜ê²½ì„ ì§€ì •.
+	// ëŒë‹¤ í•¨ìˆ˜ê°€ ì°¸ì¡°í•  í™˜ê²½ì„ ìº¡ì²˜(Capture)ë¼ê³  í•¨.
+	// ì—¬ê¸°ì„œëŠ” í˜„ì¬ ëŒë‹¤ êµ¬ë¬¸ì´ ì¸ìŠ¤í„´ìŠ¤ì˜ ê´€ë ¨ ë©¤ë²„ í•¨ìˆ˜ì™€ ë³€ìˆ˜ë¥¼ ì‚¬ìš©í•˜ë¯€ë¡œ ìº¡ì²˜ í™˜ê²½ì„ thisë¡œ ì§€ì •.
 
-	// ÆÄ¶ó¹ÌÅÍ ¸®½ºÆ®(Parameter List) : ¶÷´Ù ÇÔ¼ö°¡ »ç¿ëÇÒ ÆÄ¶ó¹ÌÅÍ¸¦ ÁöÁ¤ÇÏ´Â ±¸¹®.
-	// ¿ì¸®°¡ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®´Â ÇÔ¼ö ÀÎÀÚ°¡ ¾øÀ¸¹Ç·Î ºó °ıÈ£¸¦ »ç¿ë.
+	// íŒŒë¼ë¯¸í„° ë¦¬ìŠ¤íŠ¸(Parameter List) : ëŒë‹¤ í•¨ìˆ˜ê°€ ì‚¬ìš©í•  íŒŒë¼ë¯¸í„°ë¥¼ ì§€ì •í•˜ëŠ” êµ¬ë¬¸.
+	// ìš°ë¦¬ê°€ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸ëŠ” í•¨ìˆ˜ ì¸ìê°€ ì—†ìœ¼ë¯€ë¡œ ë¹ˆ ê´„í˜¸ë¥¼ ì‚¬ìš©.
 
-	// ÈÄÇà ¹İÈ¯ Å¸ÀÔ (Trailing Return Type) : -> ±âÈ£¸¦ »ç¿ëÇÑ ÈÄ, ¶÷´Ù ÇÔ¼ö°¡ ¹İÈ¯ÇÒ Å¸ÀÔÀ» ÁöÁ¤.
-	// ¿ì¸®°¡ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®´Â ¹İÈ¯°ªÀÌ ¾øÀ¸¹Ç·Î void¸¦ »ç¿ë.
+	// í›„í–‰ ë°˜í™˜ íƒ€ì… (Trailing Return Type) : -> ê¸°í˜¸ë¥¼ ì‚¬ìš©í•œ í›„, ëŒë‹¤ í•¨ìˆ˜ê°€ ë°˜í™˜í•  íƒ€ì…ì„ ì§€ì •.
+	// ìš°ë¦¬ê°€ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸ëŠ” ë°˜í™˜ê°’ì´ ì—†ìœ¼ë¯€ë¡œ voidë¥¼ ì‚¬ìš©.
 
-	// ¶÷´Ù ÇÔ¼ö ±¸¹®(Lambda Body) : {}·Î Ä¸Ã³ È¯°æÀ» »ç¿ëÇÑ ¶÷´Ù ÇÔ¼öÀÇ ·ÎÁ÷À» ³Ö¾îÁÜ.
-	// ¾Õ¼­ ¶÷´Ù ¼Ò°³ÀÚÀÇ Ä¸Ã³¸¦ this·Î ÁöÁ¤Çß±â ¶§¹®¿¡ ¸â¹ö º¯¼ö¿Í ÇÔ¼ö¿¡ ÀÚÀ¯·Ó°Ô Á¢±Ù °¡´É.
+	// ëŒë‹¤ í•¨ìˆ˜ êµ¬ë¬¸(Lambda Body) : {}ë¡œ ìº¡ì²˜ í™˜ê²½ì„ ì‚¬ìš©í•œ ëŒë‹¤ í•¨ìˆ˜ì˜ ë¡œì§ì„ ë„£ì–´ì¤Œ.
+	// ì•ì„œ ëŒë‹¤ ì†Œê°œìì˜ ìº¡ì²˜ë¥¼ thisë¡œ ì§€ì •í–ˆê¸° ë•Œë¬¸ì— ë©¤ë²„ ë³€ìˆ˜ì™€ í•¨ìˆ˜ì— ììœ ë¡­ê²Œ ì ‘ê·¼ ê°€ëŠ¥.
 
-	// ´ÙÀ½ °ø°İ È®ÀÎÇÏ´Â Notify°¡ È£ÃâµÉ ¶§, »ç¿ëÇÒ ¶÷´Ù½Ä
+	// ë‹¤ìŒ ê³µê²© í™•ì¸í•˜ëŠ” Notifyê°€ í˜¸ì¶œë  ë•Œ, ì‚¬ìš©í•  ëŒë‹¤ì‹
 	ABAnim->OnNextAttackCheck.AddLambda([this]()->void {
 		ABLOG(Warning, TEXT("OnNextAttackCheck"));
 		CanNextCombo = false;
@@ -510,23 +510,23 @@ void AABCharacter::PostInitializeComponents()
 		}
 	});
 
-	// °ø°İÇÒ ¶§, Å½Áö¿¡ »ç¿ëÇÒ µµÇü Ãß°¡
+	// ê³µê²©í•  ë•Œ, íƒì§€ì— ì‚¬ìš©í•  ë„í˜• ì¶”ê°€
 	ABAnim->OnAttackHitCheck.AddUObject(this, &AABCharacter::AttackCheck);
 
-	//// Ä³¸¯ÅÍ Ã¼·ÂÀÌ 0 µÆÀ» ¶§, ÇÔ¼ö È£Ãâ
+	//// ìºë¦­í„° ì²´ë ¥ì´ 0 ëì„ ë•Œ, í•¨ìˆ˜ í˜¸ì¶œ
 	//CharacterStat->OnHPIsZero.AddLambda([this]()->void {
 	//	ABLOG(Warning, TEXT("OnHPIsZero"));
-	//	// Á×´Â ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+	//	// ì£½ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
 	//	ABAnim->SetDeadAnim();
-	//	// ÄÃ¸®Àü ºñÈ°¼ºÈ­
+	//	// ì»¬ë¦¬ì „ ë¹„í™œì„±í™”
 	//	SetActorEnableCollision(false);
 	//});
 
-	//// HP UI Casting ÇÏ±â
+	//// HP UI Casting í•˜ê¸°
 	//auto CharacterWidget = Cast<UABCharacterWidget>(HPBarWidget->GetUserWidgetObject());
 	//if (nullptr != CharacterWidget)
 	//{
-	//	// HP UI¿¡ »õ·Î¿î Ä³¸¯ÅÍ »óÅÂ Á¤º¸ Ãß°¡
+	//	// HP UIì— ìƒˆë¡œìš´ ìºë¦­í„° ìƒíƒœ ì •ë³´ ì¶”ê°€
 	//	CharacterWidget->BindCharacterStat(CharacterStat);
 	//}
 	
@@ -534,32 +534,32 @@ void AABCharacter::PostInitializeComponents()
 
 void AABCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrfupted)
 {
-	// ÇöÀç °ø°İÁßÀÌÁö ¾Ê´Ù¸é, returnÀ» ÅëÇØ¼­ ÇÔ¼ö¸¦ ¹Ù·Î Á¾·á
+	// í˜„ì¬ ê³µê²©ì¤‘ì´ì§€ ì•Šë‹¤ë©´, returnì„ í†µí•´ì„œ í•¨ìˆ˜ë¥¼ ë°”ë¡œ ì¢…ë£Œ
 	ABCHECK(IsAttacking);
 
-	// ÀÌÀü¿¡ °ø°İ »óÅÂ¿´´Ù¸é
+	// ì´ì „ì— ê³µê²© ìƒíƒœì˜€ë‹¤ë©´
 	ABCHECK(CurrentCombo > 0);
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ°¡ ³¡³µÀ¸¹Ç·Î, °ø°İ »óÅÂ Á¾·á
+	// ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ê°€ ëë‚¬ìœ¼ë¯€ë¡œ, ê³µê²© ìƒíƒœ ì¢…ë£Œ
 	IsAttacking = false;
 	AttackEndComboState();
 
-	// °ø°İÀÌ Á¾·áµÆÀ¸¹Ç·Î ÇØ´ç ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®¿¡ µî·ÏµÈ ÇÔ¼ö¸¦ ¸ğµÎ È£Ãâ
+	// ê³µê²©ì´ ì¢…ë£Œëìœ¼ë¯€ë¡œ í•´ë‹¹ ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ì— ë“±ë¡ëœ í•¨ìˆ˜ë¥¼ ëª¨ë‘ í˜¸ì¶œ
 	OnAttackEnd.Broadcast();
 }
 
-// ÄŞº¸ °ø°İÀÌ ½ÃÀÛÇÒ ¶§, °ü·Ã ¼Ó¼º ÁöÁ¤
+// ì½¤ë³´ ê³µê²©ì´ ì‹œì‘í•  ë•Œ, ê´€ë ¨ ì†ì„± ì§€ì •
 void AABCharacter::AttackStartComboState()
 {
 	CanNextCombo = true;
 	IsComboInputOn = false;
-	// ÇöÀç ÄŞº¸ ¹øÈ£°¡ 0 ~ MaxCombo - 1 »çÀÌ¿¡ Á¸ÀçÇÑ´Ù¸é ´ÙÀ½À¸·Î ÀÌµ¿ÇÏ°í
-	// °ÅÁşÀÌ¶ó¸é ÇØ´ç ÇÔ¼ö¸¦ Áï°¢ ¹İÈ¯.
+	// í˜„ì¬ ì½¤ë³´ ë²ˆí˜¸ê°€ 0 ~ MaxCombo - 1 ì‚¬ì´ì— ì¡´ì¬í•œë‹¤ë©´ ë‹¤ìŒìœ¼ë¡œ ì´ë™í•˜ê³ 
+	// ê±°ì§“ì´ë¼ë©´ í•´ë‹¹ í•¨ìˆ˜ë¥¼ ì¦‰ê° ë°˜í™˜.
 	ABCHECK(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
-	// ÇöÀç ÄŞº¸ ¹øÈ£¸¦ ¼³Á¤ÇÏ´Âµ¥ 1 ~ MaxCombo »çÀÌÀÇ °ªÀ¸·Î¸¸ Á¸ÀçÇÏµµ·Ï ¼³Á¤
+	// í˜„ì¬ ì½¤ë³´ ë²ˆí˜¸ë¥¼ ì„¤ì •í•˜ëŠ”ë° 1 ~ MaxCombo ì‚¬ì´ì˜ ê°’ìœ¼ë¡œë§Œ ì¡´ì¬í•˜ë„ë¡ ì„¤ì •
 	CurrentCombo = FMath::Clamp<int32>(CurrentCombo + 1, 1, MaxCombo);
 }
 
-// ÄŞº¸ °ø°İÀ» Á¾·áÇÒ ¶§, »ç¿ë
+// ì½¤ë³´ ê³µê²©ì„ ì¢…ë£Œí•  ë•Œ, ì‚¬ìš©
 void AABCharacter::AttackEndComboState()
 {
 	CanNextCombo = false;
@@ -567,19 +567,19 @@ void AABCharacter::AttackEndComboState()
 	CurrentCombo = 0;
 }
 
-// °ø°İ È®ÀÎ
+// ê³µê²© í™•ì¸
 void AABCharacter::AttackCheck()
 {
-	// ¸¶Áö¸· ¹«±â »ç°Å¸® °¡Á®¿À±â
+	// ë§ˆì§€ë§‰ ë¬´ê¸° ì‚¬ê±°ë¦¬ ê°€ì ¸ì˜¤ê¸°
 	float FinalAttackRange = GetFinalAttackRange();
 
-	// HitReuslt ±¸Á¶Ã¼
+	// HitReuslt êµ¬ì¡°ì²´
 	FHitResult HitResult;
 	// Params
 	FCollisionQueryParams Params(NAME_None, false, this);
 
-	// Ä¸½¶ Å¸ÀÔÀ¸·Î Ãæµ¹ È®ÀÎ
-	// ³¡ ºÎºĞÀº 50cm ¹İ±¸Ã¼, °¡¿îµ¥´Â 200cmÀÇ ¿ø±âµÕ
+	// ìº¡ìŠ íƒ€ì…ìœ¼ë¡œ ì¶©ëŒ í™•ì¸
+	// ë ë¶€ë¶„ì€ 50cm ë°˜êµ¬ì²´, ê°€ìš´ë°ëŠ” 200cmì˜ ì›ê¸°ë‘¥
 	bool bResult = GetWorld()->SweepSingleByChannel(
 		HitResult,
 		GetActorLocation(),
@@ -590,16 +590,16 @@ void AABCharacter::AttackCheck()
 		Params
 	);
 
-// µğ¹ö±× ¸ğµå
+// ë””ë²„ê·¸ ëª¨ë“œ
 #if ENABLE_DRAW_DEBUG
 
 	FVector TraceVec = GetActorForwardVector() * FinalAttackRange;
 	FVector Center = GetActorLocation() + TraceVec * 0.5f;
 	float HalfHeight = FinalAttackRange * 0.5f + AttackRadius;
-	// Ä³¸¯ÅÍ°¡ ¹Ù¶óº¸´Â ½Ã¼±°ú Ä¸½¶ÀÇ »ó´Ü ¹æÇâ(Z ¹æÇâ)ÀÌ °°À½.
-	// µû¶ó¼­, Ä³¸¯ÅÍ ½Ã¼± º¤ÅÍ¸¦ MakeFromZ·Î ÇØÁÖ¸é, Ä¸½¶ÀÇ »ó´ÜÀ¸·Î ÇâÇÏ´Â º¤ÅÍÀÓ.
+	// ìºë¦­í„°ê°€ ë°”ë¼ë³´ëŠ” ì‹œì„ ê³¼ ìº¡ìŠì˜ ìƒë‹¨ ë°©í–¥(Z ë°©í–¥)ì´ ê°™ìŒ.
+	// ë”°ë¼ì„œ, ìºë¦­í„° ì‹œì„  ë²¡í„°ë¥¼ MakeFromZë¡œ í•´ì£¼ë©´, ìº¡ìŠì˜ ìƒë‹¨ìœ¼ë¡œ í–¥í•˜ëŠ” ë²¡í„°ì„.
 	FQuat CapsuleRot = FRotationMatrix::MakeFromZ(TraceVec).ToQuat();
-	// Ãæµ¹ ¹°Ã¼°¡ ÀÖ´Â °æ¿ì´Â ÃÊ·Ï»ö, ¾ø´Â °æ¿ì´Â »¡°£»ö
+	// ì¶©ëŒ ë¬¼ì²´ê°€ ìˆëŠ” ê²½ìš°ëŠ” ì´ˆë¡ìƒ‰, ì—†ëŠ” ê²½ìš°ëŠ” ë¹¨ê°„ìƒ‰
 	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	float DebugLifeTime = 5.0f;
 
@@ -616,58 +616,58 @@ void AABCharacter::AttackCheck()
 
 #endif
 
-	// Ãæµ¹ ¹°Ã¼°¡ °¨ÁöµÇ¸é, ÀÌ¸§ Ãâ·Â
+	// ì¶©ëŒ ë¬¼ì²´ê°€ ê°ì§€ë˜ë©´, ì´ë¦„ ì¶œë ¥
 	if (bResult)
 	{
 		if (HitResult.Actor.IsValid())
 		{
 			ABLOG(Warning, TEXT("Hit Actor Name : %s"), *HitResult.Actor->GetName());
 
-			// Ãæµ¹ ¹°Ã¼¿¡°Ô µ¥¹ÌÁö¸¦ ÁÜ.
-			// 50.0ÀÇ µ¥¹ÌÁö¸¦ ÁÖ°í µ¥¹ÌÁö Àü´Ş ÁÖÃ¼´Â ÇöÀç ÀÔ·ÂÀ» ³»¸° ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯,
-			// µ¥¹ÌÁö Àü´Ş µµ±¸´Â ÇöÀç Ä³¸¯ÅÍ °´Ã¼·Î ¼³Á¤
+			// ì¶©ëŒ ë¬¼ì²´ì—ê²Œ ë°ë¯¸ì§€ë¥¼ ì¤Œ.
+			// 50.0ì˜ ë°ë¯¸ì§€ë¥¼ ì£¼ê³  ë°ë¯¸ì§€ ì „ë‹¬ ì£¼ì²´ëŠ” í˜„ì¬ ì…ë ¥ì„ ë‚´ë¦° í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬,
+			// ë°ë¯¸ì§€ ì „ë‹¬ ë„êµ¬ëŠ” í˜„ì¬ ìºë¦­í„° ê°ì²´ë¡œ ì„¤ì •
 
-			// ÇöÀç Ä³¸¯ÅÍ´Â ÇÃ·¹ÀÌ¾î°¡ ÀÔ·ÂÇÑ µµ±¸ÀÌ¹Ç·Î µ¥¹ÌÁö¸¦ °¡ÇÑ ÁøÁ¤ÇÑ °¡ÇØÀÚ´Â ÆùÀÌ ¾Æ´Ï¶ó Æù¿¡°Ô ¸í·ÉÀ» ³»¸¯ ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯
+			// í˜„ì¬ ìºë¦­í„°ëŠ” í”Œë ˆì´ì–´ê°€ ì…ë ¥í•œ ë„êµ¬ì´ë¯€ë¡œ ë°ë¯¸ì§€ë¥¼ ê°€í•œ ì§„ì •í•œ ê°€í•´ìëŠ” í°ì´ ì•„ë‹ˆë¼ í°ì—ê²Œ ëª…ë ¹ì„ ë‚´ë¦­ í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬
 			FDamageEvent DamageEvent;
-			// ÇöÀç Ä³¸¯ÅÍ ·¹º§¿¡ µû¸¥ µ¥¹ÌÁö¸¦ »ó´ë¿¡°Ô ÁÜ.
+			// í˜„ì¬ ìºë¦­í„° ë ˆë²¨ì— ë”°ë¥¸ ë°ë¯¸ì§€ë¥¼ ìƒëŒ€ì—ê²Œ ì¤Œ.
 			HitResult.Actor->TakeDamage(GetFinalAttackDamage(), DamageEvent, GetController(), this);
 		}
 	}
 
 	// Garbage Collection
-	// ¸Ş¸ğ¸®¿¡ ÀÖ´Â ¾ğ¸®¾ó ¿ÀºêÁ§Æ®°¡ »ç¿ë ÁßÀÎÁö ¾Æ´ÑÁö¸¦ ÁÖ±âÀûÀ¸·Î °Ë»ç.
-	// »ç¿ëÁßÀÌÁö ¾ÊÀº ¹°Ã¼¸¦ ¹ß°ßÇÏ¸é ¸Ş¸ğ¸®¿¡¼­ ÀÚµ¿ Á¦°Å.
+	// ë©”ëª¨ë¦¬ì— ìˆëŠ” ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ê°€ ì‚¬ìš© ì¤‘ì¸ì§€ ì•„ë‹Œì§€ë¥¼ ì£¼ê¸°ì ìœ¼ë¡œ ê²€ì‚¬.
+	// ì‚¬ìš©ì¤‘ì´ì§€ ì•Šì€ ë¬¼ì²´ë¥¼ ë°œê²¬í•˜ë©´ ë©”ëª¨ë¦¬ì—ì„œ ìë™ ì œê±°.
 
-	// ¾ğ¸®¾ó ¿ÀºêÁ§Æ®°¡ »ç¿ë ÁßÀÎÁö ¿©ºÎ´Â ´Ù¸¥ ¾ğ¸®¾ó ¿ÀºêÁ§Æ®°¡ ÇØ´ç ¿ÀºêÁ§Æ®¸¦
-	// ÂüÁ¶ÇÏ´ÂÁö·Î ÆÇ´Ü
+	// ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ê°€ ì‚¬ìš© ì¤‘ì¸ì§€ ì—¬ë¶€ëŠ” ë‹¤ë¥¸ ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ê°€ í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ë¥¼
+	// ì°¸ì¡°í•˜ëŠ”ì§€ë¡œ íŒë‹¨
 
-	// FHitResultÀÇ ¸â¹ö º¯¼ö ActorÀÇ ¼±¾ğÀÌ ÀÏ¹İ ÂüÁ¶·Î ¼±¾ğµÈ´Ù¸é, ÇØ´ç ÇÔ¼ö¿¡¼­ÀÇ ÂüÁ¶·Î ÀÎÇØ
-	// Á¦°ÅµÇ¾î¾ß ÇÒ ¾×ÅÍ°¡ ¸Ş¸ğ¸®¿¡ ±×´ë·Î ³²¾Æ ÀÖ´Â ¹®Á¦ ¹ß»ı.
+	// FHitResultì˜ ë©¤ë²„ ë³€ìˆ˜ Actorì˜ ì„ ì–¸ì´ ì¼ë°˜ ì°¸ì¡°ë¡œ ì„ ì–¸ëœë‹¤ë©´, í•´ë‹¹ í•¨ìˆ˜ì—ì„œì˜ ì°¸ì¡°ë¡œ ì¸í•´
+	// ì œê±°ë˜ì–´ì•¼ í•  ì•¡í„°ê°€ ë©”ëª¨ë¦¬ì— ê·¸ëŒ€ë¡œ ë‚¨ì•„ ìˆëŠ” ë¬¸ì œ ë°œìƒ.
 
-	// À§ ¹®Á¦¸¦ ÇØ°áÇÏ±â À§ÇØ TWeakObjectPtr (¾àÆ÷ÀÎÅÍ) ¹æ½ÄÀ¸·Î ¸â¹ö º¯¼ö¸¦ ¼±¾ğ.
-	// ¾à Æ÷ÀÎÅÍ´Â ÀÚÀ¯·Ó°Ô Æ÷ÀÎÅÍ Á¤º¸¸¦ Àü´ŞÇÒ ¼ö ÀÖÀ½.
-	// ¾à Æ÷ÀÎÅÍ·Î ÁöÁ¤µÈ ¾×ÅÍ¿¡ Á¢±ÙÇÏ·Á¸é, IsValid ÇÔ¼ö¸¦ »ç¿ëÇØ »ç¿ëÇÏ·Á´Â ¾×ÅÍ°¡ À¯È¿ÇÑÁö ¸ÕÀú Á¡°ËÇÏ°í »ç¿ë.
+	// ìœ„ ë¬¸ì œë¥¼ í•´ê²°í•˜ê¸° ìœ„í•´ TWeakObjectPtr (ì•½í¬ì¸í„°) ë°©ì‹ìœ¼ë¡œ ë©¤ë²„ ë³€ìˆ˜ë¥¼ ì„ ì–¸.
+	// ì•½ í¬ì¸í„°ëŠ” ììœ ë¡­ê²Œ í¬ì¸í„° ì •ë³´ë¥¼ ì „ë‹¬í•  ìˆ˜ ìˆìŒ.
+	// ì•½ í¬ì¸í„°ë¡œ ì§€ì •ëœ ì•¡í„°ì— ì ‘ê·¼í•˜ë ¤ë©´, IsValid í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•´ ì‚¬ìš©í•˜ë ¤ëŠ” ì•¡í„°ê°€ ìœ íš¨í•œì§€ ë¨¼ì € ì ê²€í•˜ê³  ì‚¬ìš©.
 }
 
-// µ¥¹ÌÁö¸¦ ÀÔ¾úÀ» ¶§ È£Ãâ
+// ë°ë¯¸ì§€ë¥¼ ì…ì—ˆì„ ë•Œ í˜¸ì¶œ
 float AABCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController *EventInstigator, AActor *DamageCauser)
 {
-	// ºÎ¸ğ Å¬·¡½ºÀÎ AActor¿¡ ±âº»ÀûÀÎ µ¥¹ÌÁö °ü·Ã ·ÎÁ÷ÀÌ ±¸ÇöµÇ¾î ÀÖ¾î Super Å°¿öµå¸¦ »ç¿ëÇØ ºÎ¸ğ Å¬·¡½ºÀÇ ·ÎÁ÷À» ¸ÕÀú ½ÇÇàÇØ¾ß ÇÔ.
+	// ë¶€ëª¨ í´ë˜ìŠ¤ì¸ AActorì— ê¸°ë³¸ì ì¸ ë°ë¯¸ì§€ ê´€ë ¨ ë¡œì§ì´ êµ¬í˜„ë˜ì–´ ìˆì–´ Super í‚¤ì›Œë“œë¥¼ ì‚¬ìš©í•´ ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ë¡œì§ì„ ë¨¼ì € ì‹¤í–‰í•´ì•¼ í•¨.
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	ABLOG(Warning, TEXT("Actor : %s took Damage : %f"), *GetName(), FinalDamage);
 
-	// Ä³¸¯ÅÍ°¡ À¯È¿ÇÑ µ¥¹ÌÁö¸¦ ÀÔÀ¸¸é, Á×Àº »óÅÂ·Î ¼³Á¤
+	// ìºë¦­í„°ê°€ ìœ íš¨í•œ ë°ë¯¸ì§€ë¥¼ ì…ìœ¼ë©´, ì£½ì€ ìƒíƒœë¡œ ì„¤ì •
 	CharacterStat->SetDamage(FinalDamage);
 
-	// µ¥¹ÌÁö¸¦ ¹ŞÀº ÇöÀç Ä³¸¯ÅÍ°¡ Á×Àº »óÅÂÀÏ ¶§
+	// ë°ë¯¸ì§€ë¥¼ ë°›ì€ í˜„ì¬ ìºë¦­í„°ê°€ ì£½ì€ ìƒíƒœì¼ ë•Œ
 	if (CurrentState == ECharacterState::DEAD)
 	{
-		// µ¥¹ÌÁö °¡ÇØÀÚ°¡ ÇÃ·¹ÀÌ¾îÀÎ °æ¿ì
+		// ë°ë¯¸ì§€ ê°€í•´ìê°€ í”Œë ˆì´ì–´ì¸ ê²½ìš°
 		if (EventInstigator->IsPlayerController())
 		{
 			auto ABPlayerController = Cast<AABPlayerController>(EventInstigator);
 			ABCHECK(nullptr != ABPlayerController, 0.0f);
-			// NPCÀÇ °æÇèÄ¡°¡ ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¸¦ ÅëÇØ¼­ Àü´ŞµÇµµ·Ï ½ÇÇà
+			// NPCì˜ ê²½í—˜ì¹˜ê°€ í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ í†µí•´ì„œ ì „ë‹¬ë˜ë„ë¡ ì‹¤í–‰
 			ABPlayerController->NPCKill(this);
 		}
 	}
@@ -675,19 +675,19 @@ float AABCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 	return FinalDamage;
 }
 
-// ¹«±â ¼³Á¤ÇÒ ¼ö ÀÖ´ÂÁö¿¡ ´ëÇÑ ¿©ºÎ
+// ë¬´ê¸° ì„¤ì •í•  ìˆ˜ ìˆëŠ”ì§€ì— ëŒ€í•œ ì—¬ë¶€
 bool AABCharacter::CanSetWeapon()
 {
 	return true;
 }
 
-// ¹«±â ¼³Á¤
+// ë¬´ê¸° ì„¤ì •
 void AABCharacter::SetWeapon(AABWeapon* NewWeapon)
 {
-	// »õ·Î¿î ¹«±â°¡ Á¸ÀçÇÒ °æ¿ì¿¡¸¸ ÀÛµ¿
+	// ìƒˆë¡œìš´ ë¬´ê¸°ê°€ ì¡´ì¬í•  ê²½ìš°ì—ë§Œ ì‘ë™
 	ABCHECK(nullptr != NewWeapon);
 
-	// ±âÁ¸ ¹«±â°¡ Á¸ÀçÇÒ °æ¿ì, »èÁ¦
+	// ê¸°ì¡´ ë¬´ê¸°ê°€ ì¡´ì¬í•  ê²½ìš°, ì‚­ì œ
 	if (nullptr != CurrentWeapon)
 	{
 		CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
@@ -695,62 +695,62 @@ void AABCharacter::SetWeapon(AABWeapon* NewWeapon)
 		CurrentWeapon = nullptr;
 	}
 
-	// »õ·Î¿î ¹«±â Ãß°¡
+	// ìƒˆë¡œìš´ ë¬´ê¸° ì¶”ê°€
 	FName WeaponSocket(TEXT("hand_rSocket"));
 	
 	if (nullptr != NewWeapon)
 	{
-		// »õ·Î¿î ¹«±â¸¦ Ä³¸¯ÅÍÀÇ ¼ÒÄÏ¿¡ ºÙÀÌ°í Owner ¼³Á¤
+		// ìƒˆë¡œìš´ ë¬´ê¸°ë¥¼ ìºë¦­í„°ì˜ ì†Œì¼“ì— ë¶™ì´ê³  Owner ì„¤ì •
 		NewWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
 		NewWeapon->SetOwner(this);
 		CurrentWeapon = NewWeapon;
 	}
 }
 
-// ¼ÒÀ¯µÇ¾úÀ» ¶§, È£ÃâÇÏ´Â ÇÔ¼ö
+// ì†Œìœ ë˜ì—ˆì„ ë•Œ, í˜¸ì¶œí•˜ëŠ” í•¨ìˆ˜
 void AABCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	//// ÇÃ·¹ÀÌ¾î°¡ Á¶Á¾ÇÏ´Â Ä³¸¯ÅÍÀÎ °æ¿ì
+	//// í”Œë ˆì´ì–´ê°€ ì¡°ì¢…í•˜ëŠ” ìºë¦­í„°ì¸ ê²½ìš°
 	//if (IsPlayerControlled())
 	//{
 	//	SetControlMode(EControlMode::DIABLO);
 	//	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	//}
-	//// NPCÀÎ °æ¿ì
+	//// NPCì¸ ê²½ìš°
 	//else
 	//{
 	//	SetControlMode(EControlMode::NPC);
-	//	// ÇÃ·¹ÀÌ¾îº¸´Ù ¼Óµµ°¡ ´À¸®µµ·Ï ¼³Á¤
+	//	// í”Œë ˆì´ì–´ë³´ë‹¤ ì†ë„ê°€ ëŠë¦¬ë„ë¡ ì„¤ì •
 	//	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 	//}
 
 
 }
 
-// Config ÆÄÀÏ·ÎºÎÅÍ ¾Ö¼Â °æ·Î¸¦ °¡Á®¿Í ·ÎµùÀ» ¿Ï·áÇÒ ¶§, È£ÃâÇÒ ÇÔ¼ö
-// ÇØ´ç ÇÔ¼ö¿¡¼­ ÇÚµé·¯·ÎºÎÅÍ ¾Ö¼ÂÀ» Ä³½ºÆÃÇØ Ä³¸¯ÅÍ ½ºÄÌ·¹Å» ¸Ş½Ã·Î µî·Ï
+// Config íŒŒì¼ë¡œë¶€í„° ì• ì…‹ ê²½ë¡œë¥¼ ê°€ì ¸ì™€ ë¡œë”©ì„ ì™„ë£Œí•  ë•Œ, í˜¸ì¶œí•  í•¨ìˆ˜
+// í•´ë‹¹ í•¨ìˆ˜ì—ì„œ í•¸ë“¤ëŸ¬ë¡œë¶€í„° ì• ì…‹ì„ ìºìŠ¤íŒ…í•´ ìºë¦­í„° ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œë¡œ ë“±ë¡
 void AABCharacter::OnAssetLoadCompleted()
 {
-	// ºñµ¿±â·Î °¡Á®¿Â ¾Ö¼ÂÀ» Ä³½ºÆÃ
+	// ë¹„ë™ê¸°ë¡œ ê°€ì ¸ì˜¨ ì• ì…‹ì„ ìºìŠ¤íŒ…
 	USkeletalMesh* AssetLoaded = Cast<USkeletalMesh>(AssetStreamingHandle->GetLoadedAsset());
 
-	// ÇÚµé·¯ ¾È¿¡ ÀÖ´Â ³»¿ëÀº ÃÊ±âÈ­
+	// í•¸ë“¤ëŸ¬ ì•ˆì— ìˆëŠ” ë‚´ìš©ì€ ì´ˆê¸°í™”
 	AssetStreamingHandle.Reset();
 
-	// ½ºÄÌ·¹Å» ¸Ş½Ã¸¦ Á¤»óÀûÀ¸·Î °¡Á®¿Â °æ¿ì µî·Ï
+	// ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œë¥¼ ì •ìƒì ìœ¼ë¡œ ê°€ì ¸ì˜¨ ê²½ìš° ë“±ë¡
 	ABCHECK(nullptr != AssetLoaded);
 	GetMesh()->SetSkeletalMesh(AssetLoaded);
 
-	// Ä³¸¯ÅÍ »óÅÂ¸¦ ÁØºñ »óÅÂ·Î ¼³Á¤
+	// ìºë¦­í„° ìƒíƒœë¥¼ ì¤€ë¹„ ìƒíƒœë¡œ ì„¤ì •
 	SetCharacterState(ECharacterState::READY);
 }
 
-// Ä³¸¯ÅÍ »óÅÂ ¼³Á¤
+// ìºë¦­í„° ìƒíƒœ ì„¤ì •
 void AABCharacter::SetCharacterState(ECharacterState NewState)
 {
-	// »óÅÂ°¡ °°À¸¸é ¹İÈ¯
+	// ìƒíƒœê°€ ê°™ìœ¼ë©´ ë°˜í™˜
 	ABCHECK(CurrentState != NewState);
 	
 	CurrentState = NewState;
@@ -760,47 +760,47 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 	// LOADING
 	case ECharacterState::LOADING:
 	{
-		// ÇÃ·¹ÀÌ¾îÀÏ °æ¿ì, ·Îµù ÁßÀÌ¹Ç·Î Player Controller ÀÔ·Â¹ŞÁö ¸øÇÏµµ·Ï ¼³Á¤
+		// í”Œë ˆì´ì–´ì¼ ê²½ìš°, ë¡œë”© ì¤‘ì´ë¯€ë¡œ Player Controller ì…ë ¥ë°›ì§€ ëª»í•˜ë„ë¡ ì„¤ì •
 		if (bIsPlayer)
 		{
 			DisableInput(ABPlayerController);
 
-			// HUD À§Á¬°ú Ä³¸¯ÅÍ ½ºÅİ ÄÄÆ÷³ÍÆ® ¿¬°á
-			// GetHUDWidget()À¸·Î WidgetÀ» °¡Á®¿À±â Àü¿¡ ÇØ´ç ÇÔ¼ö°¡ ½ÇÇàµÇ¾î nullÀ» ¹İÈ¯ÇÏ´Â ¹®Á¦°¡ ¹ß»ıÇØ
-			// ¸¶Áö¸·¿¡ Delay¸¦ ÅëÇØ¼­ ½ÇÇàµÇµµ·Ï ¼³Á¤
+			// HUD ìœ„ì ¯ê³¼ ìºë¦­í„° ìŠ¤í…Ÿ ì»´í¬ë„ŒíŠ¸ ì—°ê²°
+			// GetHUDWidget()ìœ¼ë¡œ Widgetì„ ê°€ì ¸ì˜¤ê¸° ì „ì— í•´ë‹¹ í•¨ìˆ˜ê°€ ì‹¤í–‰ë˜ì–´ nullì„ ë°˜í™˜í•˜ëŠ” ë¬¸ì œê°€ ë°œìƒí•´
+			// ë§ˆì§€ë§‰ì— Delayë¥¼ í†µí•´ì„œ ì‹¤í–‰ë˜ë„ë¡ ì„¤ì •
 			//ABPlayerController->GetHUDWidget()->BindCharacterStat(CharacterStat);
 
-			// TimerManger·Î Delay °É±â
+			// TimerMangerë¡œ Delay ê±¸ê¸°
 			FTimerDelegate TimerDelegate;
 			TimerDelegate.BindUFunction(this, FName("DelayBindCharacterStat"));
 
 			FTimerHandle TimerHandle;
 			GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, 0.1f, false);
 
-			// null ¹İÈ¯µÊ.
+			// null ë°˜í™˜ë¨.
 			ABLOG(Warning, TEXT("Get HUD Widget : %s"), ABPlayerController->GetHUDWidget());
 
-			// Player State ¼³Á¤
+			// Player State ì„¤ì •
 			auto ABPlayerState = Cast<AABPlayerState>(PlayerState);
 			ABCHECK(nullptr != ABPlayerState);
-			// Actor Component¿¡ ÇÃ·¹ÀÌ¾î ·¹º§ Àç¼³Á¤
+			// Actor Componentì— í”Œë ˆì´ì–´ ë ˆë²¨ ì¬ì„¤ì •
 			CharacterStat->SetNewLevel(ABPlayerState->GetCharacterLevel());
 		}
-		// NPCÀÎ °æ¿ì, ÇöÀç °ÔÀÓ ½ºÄÚ¾î¸¦ °ÔÀÓ ¸ğµå¿¡°Ô ÁúÀÇÇÏ°í, ÀÌ¸¦ ±â¹İÀ¸·Î ·¹º§ °ª ¼³Á¤
+		// NPCì¸ ê²½ìš°, í˜„ì¬ ê²Œì„ ìŠ¤ì½”ì–´ë¥¼ ê²Œì„ ëª¨ë“œì—ê²Œ ì§ˆì˜í•˜ê³ , ì´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ë ˆë²¨ ê°’ ì„¤ì •
 		else
 		{
-			// °ÔÀÓ ¸ğµå °¡Á®¿À±â
+			// ê²Œì„ ëª¨ë“œ ê°€ì ¸ì˜¤ê¸°
 			auto ABGameMode = Cast<AABGameMode>(GetWorld()->GetAuthGameMode());
 			ABCHECK(nullptr != ABGameMode);
-			// ·¹º§ °è»ê
+			// ë ˆë²¨ ê³„ì‚°
 			int32 TargetLevel = FMath::CeilToInt(((float)ABGameMode->GetScore() * 0.8f));
 			int32 FinalLevel = FMath::Clamp<int32>(TargetLevel, 1, 20);
 
 			ABLOG(Warning, TEXT("New NPC Level : %d"), FinalLevel);
-			// NPC Ä³¸¯ÅÍ ·¹º§ ¼³Á¤
+			// NPC ìºë¦­í„° ë ˆë²¨ ì„¤ì •
 			CharacterStat->SetNewLevel(FinalLevel);
 		}
-		// Ä³¸¯ÅÍ¸¦ ¼û±â±â
+		// ìºë¦­í„°ë¥¼ ìˆ¨ê¸°ê¸°
 		SetActorHiddenInGame(true);
 		HPBarWidget->SetHiddenInGame(true);
 		bCanBeDamaged = false;
@@ -811,28 +811,28 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 	// READY
 	case ECharacterState::READY:
 	{
-		// Ä³¸¯ÅÍ¸¦ º¸ÀÌµµ·Ï È°¼ºÈ­
+		// ìºë¦­í„°ë¥¼ ë³´ì´ë„ë¡ í™œì„±í™”
 		SetActorHiddenInGame(false);
 		HPBarWidget->SetHiddenInGame(false);
 		bCanBeDamaged = true;
-		// Ã¼·ÂÀÌ 0ÀÏ ¶§, µ¨¸®°ÔÀÌÆ® ÇÔ¼ö Ãß°¡
+		// ì²´ë ¥ì´ 0ì¼ ë•Œ, ë¸ë¦¬ê²Œì´íŠ¸ í•¨ìˆ˜ ì¶”ê°€
 		CharacterStat->OnHPIsZero.AddLambda([this]() -> void {
 			SetCharacterState(ECharacterState::DEAD);
 		});
 
-		// Ä³¸¯ÅÍ Ã¼·Â À§Á¬ ¼³Á¤
+		// ìºë¦­í„° ì²´ë ¥ ìœ„ì ¯ ì„¤ì •
 		auto CharacterWidget = Cast<UABCharacterWidget>(HPBarWidget->GetUserWidgetObject());
 		ABCHECK(nullptr != CharacterWidget);
 		CharacterWidget->BindCharacterStat(CharacterStat);
 
-		// ÇÃ·¹ÀÌ¾î ¼³Á¤
+		// í”Œë ˆì´ì–´ ì„¤ì •
 		if (bIsPlayer)
 		{
 			SetControlMode(EControlMode::DIABLO);
 			GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 			EnableInput(ABPlayerController);
 		}
-		// AI Ä³¸¯ÅÍ·Î ¼³Á¤
+		// AI ìºë¦­í„°ë¡œ ì„¤ì •
 		else
 		{
 			SetControlMode(EControlMode::NPC);
@@ -844,33 +844,33 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 	// DEAD
 	case ECharacterState::DEAD:
 	{
-		// Ã¼·Â À§Á¬¸¸ ¼û±â°í Á×´Â ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+		// ì²´ë ¥ ìœ„ì ¯ë§Œ ìˆ¨ê¸°ê³  ì£½ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
 		SetActorEnableCollision(false);
 		GetMesh()->SetHiddenInGame(false);
 		HPBarWidget->SetHiddenInGame(true);
 		ABAnim->SetDeadAnim();
 		bCanBeDamaged = false;
 
-		// ÇÃ·¹ÀÌ¾î ÀÔ·Â ºñÈ°¼ºÈ­
+		// í”Œë ˆì´ì–´ ì…ë ¥ ë¹„í™œì„±í™”
 		if (bIsPlayer)
 		{
 			DisableInput(ABPlayerController);
 		}
-		// AIÀÎ °æ¿ì, Behavior Tree ºñÈ°¼ºÈ­
+		// AIì¸ ê²½ìš°, Behavior Tree ë¹„í™œì„±í™”
 		else
 		{
 			ABAIController->StopAI();
 		}
 		
-		// Å¸ÀÌ¸Ó ÇÚµé·¯·Î Å¸ÀÌ¸Ó½ÇÇà
+		// íƒ€ì´ë¨¸ í•¸ë“¤ëŸ¬ë¡œ íƒ€ì´ë¨¸ì‹¤í–‰
 		GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda([this]() -> void
 		{
-			// ÇÃ·¹ÀÌ¾îÀÎ °æ¿ì, °á°ú Ã¢ Ãâ·Â
+			// í”Œë ˆì´ì–´ì¸ ê²½ìš°, ê²°ê³¼ ì°½ ì¶œë ¥
 			if (bIsPlayer)
 			{
 				ABPlayerController->ShowResultUI();
 			}
-			// AIÀÎ °æ¿ì, Á¦°Å
+			// AIì¸ ê²½ìš°, ì œê±°
 			else
 			{
 				Destroy();
@@ -881,36 +881,36 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 	}
 }
 
-// Ä³¸¯ÅÍ »óÅÂ °¡Á®¿À±â
+// ìºë¦­í„° ìƒíƒœ ê°€ì ¸ì˜¤ê¸°
 ECharacterState AABCharacter::GetCharacterState() const
 {
 	return CurrentState;
 }
 
-// ABControllerÀÇ GetHUDWidgetÀ» BeginPlay·Î ¹Ù·Î È£ÃâÇÏÁö ¾Ê¾Æ null°ªÀÌ ¹İÈ¯µÇ´Â °ÍÀ» ¹æÁö
-// HUD À§Á¬°ú Ä³¸¯ÅÍ ½ºÅİ ÄÄÆ÷³ÍÆ® ¿¬°á
+// ABControllerì˜ GetHUDWidgetì„ BeginPlayë¡œ ë°”ë¡œ í˜¸ì¶œí•˜ì§€ ì•Šì•„ nullê°’ì´ ë°˜í™˜ë˜ëŠ” ê²ƒì„ ë°©ì§€
+// HUD ìœ„ì ¯ê³¼ ìºë¦­í„° ìŠ¤í…Ÿ ì»´í¬ë„ŒíŠ¸ ì—°ê²°
 void AABCharacter::DelayBindCharacterStat()
 {
 	ABPlayerController->GetHUDWidget()->BindCharacterStat(CharacterStat);
 	CharacterStat->OnHPChanged.Broadcast();
 }
 
-// ÇöÀç ÇÃ·¹ÀÌ¾î °æÇèÄ¡·® °¡Á®¿À±â
+// í˜„ì¬ í”Œë ˆì´ì–´ ê²½í—˜ì¹˜ëŸ‰ ê°€ì ¸ì˜¤ê¸°
 int32 AABCharacter::GetExp() const
 {
 	return CharacterStat->GetDropExp();
 }
 
-// ÃÖÁ¾ °ø°İ »ç°Å¸® °¡Á®¿À±â
+// ìµœì¢… ê³µê²© ì‚¬ê±°ë¦¬ ê°€ì ¸ì˜¤ê¸°
 float AABCharacter::GetFinalAttackRange() const
 {
 	return (nullptr != CurrentWeapon) ? CurrentWeapon->GetAttackRange() : AttackRange;
 }
 
-// ÃÖÁ¾ °ø°İ·Â °¡Á®¿À±â
+// ìµœì¢… ê³µê²©ë ¥ ê°€ì ¸ì˜¤ê¸°
 float AABCharacter::GetFinalAttackDamage() const
 {
-	// ¹«±â °ø°İ·Â°ú ¼Ó¼ºÄ¡ °¡Á®¿Í¼­ °è»ê ÈÄ, ¹İÈ¯
+	// ë¬´ê¸° ê³µê²©ë ¥ê³¼ ì†ì„±ì¹˜ ê°€ì ¸ì™€ì„œ ê³„ì‚° í›„, ë°˜í™˜
 	float AttackDamage = (nullptr != CurrentWeapon) ? (CharacterStat->GetAttack() + CurrentWeapon->GetAttackDamage()) : CharacterStat->GetAttack();
 	float AttackModifier = (nullptr != CurrentWeapon) ? CurrentWeapon->GetAttackModifier() : 1.0f;
 

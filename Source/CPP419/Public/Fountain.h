@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,7 +12,7 @@ class CPP419_API AFountain : public AActor
 {
 	GENERATED_BODY()
 
-	// CPP419.h·Î EngineMinimal.h¸¦ Æ÷ÇÔ.
+	// CPP419.hë¡œ EngineMinimal.hë¥¼ í¬í•¨.
 	
 public:	
 	// Sets default values for this actor's properties
@@ -28,8 +28,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// VisibleAnywhere : °´Ã¼¸¦ º¼ ¼ö ÀÖÁö¸¸, ´Ù¸¥ °´Ã¼·Î º¯°æÀº ºÒ°¡´ÉÇÔ.
-	// Áï, StaticMeshComponent¿¡¼­ ´Ù¸¥ ÄÄÆ÷³ÍÆ®·Î º¯°æ ºÒ°¡´É.
+	// VisibleAnywhere : ê°ì²´ë¥¼ ë³¼ ìˆ˜ ìˆì§€ë§Œ, ë‹¤ë¥¸ ê°ì²´ë¡œ ë³€ê²½ì€ ë¶ˆê°€ëŠ¥í•¨.
+	// ì¦‰, StaticMeshComponentì—ì„œ ë‹¤ë¥¸ ì»´í¬ë„ŒíŠ¸ë¡œ ë³€ê²½ ë¶ˆê°€ëŠ¥.
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent *Body;
 
@@ -42,19 +42,19 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UParticleSystemComponent *Splash;
 	
-	// UPROPERTY() ¸ÅÅ©·Î ¼±¾ğ¸¸À¸·Îµµ ¹Ì¸® ¿¹¾àµÈ ±âº»°ªÀÌ ÁöÁ¤µÊ.
-	// Á¤¼ö À¯ÇüÀÇ ¸â¹ö º¯¼ö¿¡ UPROPERTY ¸ÅÅ©·Î ¼±¾ğÇÏ¸é, ¹İµå½Ã 0ÀÇ ÃÊ±â °ªÀ» º¸Àå¹ŞÀ½.
+	// UPROPERTY() ë§¤í¬ë¡œ ì„ ì–¸ë§Œìœ¼ë¡œë„ ë¯¸ë¦¬ ì˜ˆì•½ëœ ê¸°ë³¸ê°’ì´ ì§€ì •ë¨.
+	// ì •ìˆ˜ ìœ í˜•ì˜ ë©¤ë²„ ë³€ìˆ˜ì— UPROPERTY ë§¤í¬ë¡œ ì„ ì–¸í•˜ë©´, ë°˜ë“œì‹œ 0ì˜ ì´ˆê¸° ê°’ì„ ë³´ì¥ë°›ìŒ.
 
-	// EditAnywhere : ¾ğ¸®¾ó ¿¡µğÅÍ¿¡¼­ ¼Ó¼ºÀÇ µ¥ÀÌÅÍ º¯°æ
+	// EditAnywhere : ì–¸ë¦¬ì–¼ ì—ë””í„°ì—ì„œ ì†ì„±ì˜ ë°ì´í„° ë³€ê²½
 	UPROPERTY(EditAnywhere, Category = ID)
 		int32 ID;
 
-	// ÁöÁ¤ÇÑ ¼Óµµ·Î È¸Àü½ÃÄÑÁÖ´Â ÄÄÆ÷³ÍÆ®
+	// ì§€ì •í•œ ì†ë„ë¡œ íšŒì „ì‹œì¼œì£¼ëŠ” ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere)
 		URotatingMovementComponent* Movement;
 
 private:
-	// Meta = AllowPrivateAccess : Àº´Ğ°ú µ¿½Ã¿¡ ¿ÜºÎ¿¡¼­ ÆíÁıÇÒ ¼ö ÀÖµµ·Ï Áö¿ø
+	// Meta = AllowPrivateAccess : ì€ë‹‰ê³¼ ë™ì‹œì— ì™¸ë¶€ì—ì„œ í¸ì§‘í•  ìˆ˜ ìˆë„ë¡ ì§€ì›
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float RotateSpeed;
 };

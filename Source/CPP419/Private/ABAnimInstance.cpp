@@ -1,15 +1,15 @@
-// User : Jeonghoe22 : Study by 'ÀÌµæ¿ìÀÇ ¾ğ¸®¾ó C++ °ÔÀÓ°³¹ßÀÇ Á¤¼®'
+ï»¿// User : Jeonghoe22 : Study by 'ì´ë“ìš°ì˜ ì–¸ë¦¬ì–¼ C++ ê²Œì„ê°œë°œì˜ ì •ì„'
 
 #include "ABAnimInstance.h"
 
 UABAnimInstance::UABAnimInstance()
 {
-	// ÃÊ±âÈ­
+	// ì´ˆê¸°í™”
 	CurrentPawnSpeed = 0.0f; 
 	IsInAir = false;
 	IsDead = false;
 
-	// ¿¬¼Ó °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ ´ëÀÔ
+	// ì—°ì† ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ëŒ€ì…
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ATTACK_MONTAGE(TEXT("/Game/Book/Animations/SK_Mannequin_Skeleton_Montage.SK_Mannequin_Skeleton_Montage"));
 	if (ATTACK_MONTAGE.Succeeded())
 	{
@@ -21,68 +21,68 @@ void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	// Æù¿¡ Á¢±Ù
+	// í°ì— ì ‘ê·¼
 	auto Pawn = TryGetPawnOwner();
 
-	// if(::IsValid(°´Ã¼)´Â °´Ã¼°¡ À¯È¿ÇÑÁö °Ë»çÇÏ´Â ¿ªÇÒ - À¯È¿¼º °Ë»ç¸¦ Åë°úÇÑ °´Ã¼ »ç¿ë °¡´É
-	// ¸í½ÃÀûÀ¸·Î °Ë»çÇÏ¿© ¾ÈÀüÇÑ Á¢±ÙÀ» º¸Àå, °´Ã¼°¡ null Æ÷ÀÎÅÍÀÏ °æ¿ì³ª ÀÌ¹Ì ÆÄ±«µÈ °´Ã¼¿¡ Á¢±ÙÇÏ´Â °ÍÀ» ¹æÁöÇÏ´Âµ¥ µµ¿ò.
+	// if(::IsValid(ê°ì²´)ëŠ” ê°ì²´ê°€ ìœ íš¨í•œì§€ ê²€ì‚¬í•˜ëŠ” ì—­í•  - ìœ íš¨ì„± ê²€ì‚¬ë¥¼ í†µê³¼í•œ ê°ì²´ ì‚¬ìš© ê°€ëŠ¥
+	// ëª…ì‹œì ìœ¼ë¡œ ê²€ì‚¬í•˜ì—¬ ì•ˆì „í•œ ì ‘ê·¼ì„ ë³´ì¥, ê°ì²´ê°€ null í¬ì¸í„°ì¼ ê²½ìš°ë‚˜ ì´ë¯¸ íŒŒê´´ëœ ê°ì²´ì— ì ‘ê·¼í•˜ëŠ” ê²ƒì„ ë°©ì§€í•˜ëŠ”ë° ë„ì›€.
 
-	// if(°´Ã¼)
-	// nullÆ÷ÀÎÅÍ ¶Ç´Â À¯È¿ÇÏÁö ¾ÊÀº »óÅÂÀÎ °æ¿ì¿¡¸¸ false ¹İÈ¯
-	// À¯È¿¼º °Ë»ç¸¦ ¼öÇàÇÏÁö ¾Ê°í °´ Ã¼ÀÇ »óÅÂ¿¡ µû¶ó Á¶°ÇÀ» Æò°¡
+	// if(ê°ì²´)
+	// nullí¬ì¸í„° ë˜ëŠ” ìœ íš¨í•˜ì§€ ì•Šì€ ìƒíƒœì¸ ê²½ìš°ì—ë§Œ false ë°˜í™˜
+	// ìœ íš¨ì„± ê²€ì‚¬ë¥¼ ìˆ˜í–‰í•˜ì§€ ì•Šê³  ê° ì²´ì˜ ìƒíƒœì— ë”°ë¼ ì¡°ê±´ì„ í‰ê°€
 
-	// ÀüÀÚ ¹æ½ÄÀÌ À¯È¿¼º °Ë»ç¸¦ ÇÏ±â ¶§¹®¿¡ ´õ¿í ´õ ¾ÈÀüÇÔ.
-	// ¾ğ¸®¾ó ¿£ÁøÀº °´Ã¼ÀÇ ¼ö¸í ÁÖ±â°¡ °ü¸®µÇ´Âµ¥ ÀÌ·¯ÇÑ °´Ã¼¿¡ Á¢±ÙÇÒ ¶§ Ç×»ó À¯È¿¼ºÀ» È®ÀÎÇÏ´Â °ÍÀÌ ÁÁÀ½.
+	// ì „ì ë°©ì‹ì´ ìœ íš¨ì„± ê²€ì‚¬ë¥¼ í•˜ê¸° ë•Œë¬¸ì— ë”ìš± ë” ì•ˆì „í•¨.
+	// ì–¸ë¦¬ì–¼ ì—”ì§„ì€ ê°ì²´ì˜ ìˆ˜ëª… ì£¼ê¸°ê°€ ê´€ë¦¬ë˜ëŠ”ë° ì´ëŸ¬í•œ ê°ì²´ì— ì ‘ê·¼í•  ë•Œ í•­ìƒ ìœ íš¨ì„±ì„ í™•ì¸í•˜ëŠ” ê²ƒì´ ì¢‹ìŒ.
 
-	// Æù¿¡ Á¢±ÙÀ» ½ÇÆĞÇÏ¸é, ¹İÈ¯
+	// í°ì— ì ‘ê·¼ì„ ì‹¤íŒ¨í•˜ë©´, ë°˜í™˜
 	if (!::IsValid(Pawn)) return;
 
-	// Á×Áö ¾ÊÀº »óÅÂ¿¡¼­¸¸ ÀÛµ¿
+	// ì£½ì§€ ì•Šì€ ìƒíƒœì—ì„œë§Œ ì‘ë™
 	if(!IsDead)
 	{
-		// ÆùÀÇ ¼Ó·Â °ªÀ» ´ëÀÔ
+		// í°ì˜ ì†ë ¥ ê°’ì„ ëŒ€ì…
 		CurrentPawnSpeed = Pawn->GetVelocity().Size();
 
-		// PawnÀÌ Character Å¬·¡½ºÀÏ ¶§¸¸ ÁøÇà
+		// Pawnì´ Character í´ë˜ìŠ¤ì¼ ë•Œë§Œ ì§„í–‰
 		auto Character = Cast<ACharacter>(Pawn);
 		if (Character)
 		{
-			// ÇöÀç Ä³¸¯ÅÍ°¡ ¶³¾îÁö°í ÀÖ´ÂÁö¸¦ È®ÀÎ
+			// í˜„ì¬ ìºë¦­í„°ê°€ ë–¨ì–´ì§€ê³  ìˆëŠ”ì§€ë¥¼ í™•ì¸
 			IsInAir = Character->GetMovementComponent()->IsFalling();
 		}
 	}
 }
 
-// ¿¬¼Ó °ø°İ ¸ùÅ¸ÁÖ Àç»ı
+// ì—°ì† ê³µê²© ëª½íƒ€ì£¼ ì¬ìƒ
 void UABAnimInstance::PlayAttackMontage()
 {
-	// µ¨¸®°ÔÀÌÆ®¿¡ ÀÇÇØ °ø°İÀÇ ½ÃÀÛ°ú °¨ÁöµÇ¹Ç·Î ¾Æ·¡ Á¶°Ç¹®Àº »ç¿ëÇÏÁö ¾Ê¾Æµµ ¹«¹æ
+	// ë¸ë¦¬ê²Œì´íŠ¸ì— ì˜í•´ ê³µê²©ì˜ ì‹œì‘ê³¼ ê°ì§€ë˜ë¯€ë¡œ ì•„ë˜ ì¡°ê±´ë¬¸ì€ ì‚¬ìš©í•˜ì§€ ì•Šì•„ë„ ë¬´ë°©
 
-	//// ¿¬¼Ó °ø°İ ¸ùÅ¸ÁÖ°¡ Àç»ı ÁßÀÌÁö ¾ÊÀ¸¸é, ÇØ´ç ¸ùÅ¸ÁÖ¸¦ Àç»ı
+	//// ì—°ì† ê³µê²© ëª½íƒ€ì£¼ê°€ ì¬ìƒ ì¤‘ì´ì§€ ì•Šìœ¼ë©´, í•´ë‹¹ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒ
 	//if (!Montage_IsPlaying(AttackMontage))
 	//{
 	//	Montage_Play(AttackMontage, 1.0f);
 	//}
 
-	// Á×Áö ¾ÊÀº °æ¿ì¿¡¸¸ ½ÇÇà
+	// ì£½ì§€ ì•Šì€ ê²½ìš°ì—ë§Œ ì‹¤í–‰
 	ABCHECK(!IsDead);
 	Montage_Play(AttackMontage, 1.0f);
 }
 
 void UABAnimInstance::JumpToAttackMontageSection(int32 NewSection)
 {
-	// Á×Áö ¾ÊÀº °æ¿ì¿¡¸¸ ½ÇÇà
+	// ì£½ì§€ ì•Šì€ ê²½ìš°ì—ë§Œ ì‹¤í–‰
 	ABCHECK(!IsDead);
-	// °ø°İ ¸ùÅ¸ÁÖ°¡ ÇöÀç Àç»ıµÇ°í ÀÖ´ÂÁö È®ÀÎ
+	// ê³µê²© ëª½íƒ€ì£¼ê°€ í˜„ì¬ ì¬ìƒë˜ê³  ìˆëŠ”ì§€ í™•ì¸
 	ABCHECK(Montage_IsPlaying(AttackMontage));
 
-	// ÇØ´ç ¸ùÅ¸ÁÖ ¼½¼ÇÀ¸·Î ÀÌµ¿
+	// í•´ë‹¹ ëª½íƒ€ì£¼ ì„¹ì…˜ìœ¼ë¡œ ì´ë™
 	Montage_JumpToSection(GetAttackMontageSectionName(NewSection), AttackMontage);
 }
 
 void UABAnimInstance::AnimNotify_AttackHitCheck()
 {
-	// ¸ÖÆ¼Ä³½ºÆ® µ¨¸®°ÔÀÌÆ®¿¡ µî·ÏµÈ ÇÔ¼ö¸¦ ¸ğµÎ È£Ãâ
+	// ë©€í‹°ìºìŠ¤íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ì— ë“±ë¡ëœ í•¨ìˆ˜ë¥¼ ëª¨ë‘ í˜¸ì¶œ
 	OnAttackHitCheck.Broadcast();
 }
 
@@ -93,7 +93,7 @@ void UABAnimInstance::AnimNotify_NextAttackCheck()
 
 FName UABAnimInstance::GetAttackMontageSectionName(int32 Section)
 {
-	// SectionÀÌ ¹üÀ§ ¾È¿¡ Á¸ÀçÇÑ´Ù¸é, ¹ØÀ¸·Î ÀÌµ¿ÇÏ°í ±×·¸Áö ¾ÊÀ¸¸é NAME_NoneÀ» Ãâ·Â
+	// Sectionì´ ë²”ìœ„ ì•ˆì— ì¡´ì¬í•œë‹¤ë©´, ë°‘ìœ¼ë¡œ ì´ë™í•˜ê³  ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ NAME_Noneì„ ì¶œë ¥
 	ABCHECK(FMath::IsWithinInclusive<int32>(Section, 1, 4), NAME_None);
 	return FName(*FString::Printf(TEXT("Attack%d"), Section));
 }
