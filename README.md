@@ -1,7 +1,7 @@
 # CPP419Study
 
 
-<img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Title_1.png?raw=true" alt="Image 9" width="500">
+<img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Title_1.png?raw=true" alt="Title" width="500">
 
 
 ## 요약
