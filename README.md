@@ -34,19 +34,7 @@
 ## 주석으로 통한 학습 기록 남기기
 
 
-<table>
-  <tr>
-    <td>
-      <figure>
-        <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Comment_1.png?raw=true" alt="Comment 1" width="500">
-      </figure>
-    </td>
-    <td>
-      <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Comment_2.png?raw=true" alt="Comment 2" width="500">
-    </td>
-  </tr>
-</table>
-
+<img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Comment_1.png?raw=true" alt="Comment 1">
 
 
 ## 시연 영상
