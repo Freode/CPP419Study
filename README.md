@@ -1,7 +1,7 @@
 # CPP419Study
 
 
-<img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Title_1.png?raw=true" alt="Title" width="500">
+<img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Title_1.png?raw=true" alt="Title" width="500">
 
 
 ## 요약
@@ -38,11 +38,11 @@
   <tr>
     <td>
       <figure>
-        <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Comment_1.png?raw=true" alt="Comment 1" width="500">
+        <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Comment_1.png?raw=true" alt="Comment 1" width="500">
       </figure>
     </td>
     <td>
-      <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Comment_2.png?raw=true" alt="Comment 2" width="500">
+      <img src = "https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Comment_2.png?raw=true" alt="Comment 2" width="500">
     </td>
   </tr>
 </table>
@@ -50,7 +50,7 @@
 
 
 ## 시연 영상
-[![시연 영상](https://github.com/Freode/CPP419Study/blob/main/ReadMeImage/CPP419_Title_1.png)](https://youtu.be/0s7hqYSqGRg)
+[![시연 영상](https://github.com/Freode/CPP419Study/blob/main/ReadMeImages/CPP419_Title_1.png)](https://youtu.be/0s7hqYSqGRg)
 - 클릭하시면, 시연 영상으로 이동합니다.
 
 
